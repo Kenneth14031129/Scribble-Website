@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import SafeSvg from "../assets/Safe.svg";
+import FunSvg from "../assets/Fun.svg";
+import ExpertSvg from "../assets/Expert.svg";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -386,115 +389,74 @@ const Home = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
-            {features.map((feature, index) => (
-              <div
-                key={feature.title}
-                className="group relative h-80 w-full perspective-1000"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                {/* Card Container with 3D Flip */}
-                <div className="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
-                  
-                  {/* Front Side */}
-                  <div className="absolute inset-0 w-full h-full backface-hidden rounded-3xl bg-gradient-to-br from-white via-blue-50 to-cyan-50 border-2 border-blue-200 shadow-xl flex flex-col items-center justify-center p-8 text-center">
-                    {/* Floating background elements */}
-                    <div className="absolute top-4 right-4 w-12 h-12 bg-blue-300/20 rounded-full animate-pulse"></div>
-                    <div className="absolute bottom-4 left-4 w-8 h-8 bg-cyan-300/20 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    
-                    {/* Main Icon */}
-                    <div className="relative mb-6">
-                      <div className={`w-24 h-24 bg-gradient-to-br ${feature.color} rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-500 border-4 border-white`}>
-                        <div className="text-4xl">{feature.emoji}</div>
-                      </div>
-                      {/* Pulsing ring */}
-                      <div className="absolute inset-0 bg-blue-400/20 rounded-full animate-ping"></div>
-                    </div>
-                    
-                    {/* Title */}
-                    <h3 className="text-2xl font-bold text-blue-900 mb-4">
-                      {feature.title}
-                    </h3>
-                    
-                    {/* Brief description */}
-                    <p className="text-blue-700 text-sm leading-relaxed">
-                      {feature.description.split(' ').slice(0, 8).join(' ')}...
-                    </p>
-                    
-                    {/* Hover indicator */}
-                    <div className="absolute bottom-4 right-4 text-blue-400 opacity-70">
-                      <div className="text-2xl animate-bounce">✨</div>
-                    </div>
-                  </div>
+            {features.map((feature, index) => {
+              // Define which SVG to use for each card
+              const getSvgComponent = () => {
+                switch (index) {
+                  case 0:
+                    return SafeSvg; // Safe & Caring
+                  case 1:
+                    return FunSvg; // Fun & Engaging
+                  case 2:
+                    return ExpertSvg; // Expert Care
+                  default:
+                    return SafeSvg;
+                }
+              };
 
-                  {/* Back Side */}
-                  <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-3xl bg-gradient-to-br from-blue-600 via-cyan-500 to-sky-500 border-2 border-blue-400 shadow-2xl flex flex-col items-center justify-center p-8 text-center text-white overflow-hidden">
-                    {/* Animated background */}
-                    <div className="absolute inset-0 opacity-20">
-                      <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl animate-pulse"></div>
-                      <div className="absolute bottom-0 left-0 w-28 h-28 bg-white/15 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-                    </div>
-                    
-                    {/* Back content */}
-                    <div className="relative z-10">
-                      {/* Large emoji */}
-                      <div className="text-6xl mb-6 animate-bounce" style={{ animationDuration: '2s' }}>
-                        {feature.emoji}
+              const SvgComponent = getSvgComponent();
+
+              return (
+                <div
+                  key={feature.title}
+                  className="group relative h-80 w-full perspective-1000"
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                >
+                  {/* Card Container with 3D Flip */}
+                  <div className="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
+                    {/* Front Side - SVG Only */}
+                    <div className="absolute inset-0 w-full h-full backface-hidden rounded-3xl bg-gradient-to-br from-white via-blue-50 to-cyan-50 border-2 border-blue-200 shadow-xl flex items-center justify-center p-8">
+                      {/* SVG Container */}
+                      <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                        <img
+                          src={SvgComponent}
+                          alt={feature.title}
+                          className="w-full h-full object-contain max-w-[240px] max-h-[240px] filter drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-500"
+                        />
                       </div>
-                      
-                      {/* Full description */}
-                      <p className="text-white/95 text-lg leading-relaxed mb-6">
-                        {feature.description}
-                      </p>
-                      
-                      {/* Interactive elements based on feature */}
-                      {index === 0 && (
-                        <div className="grid grid-cols-3 gap-3">
-                          <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                            <div className="text-2xl mb-1">🔒</div>
-                            <div className="text-xs font-medium">Secure</div>
-                          </div>
-                          <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                            <div className="text-2xl mb-1">🤗</div>
-                            <div className="text-xs font-medium">Caring</div>
-                          </div>
-                          <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                            <div className="text-2xl mb-1">🏠</div>
-                            <div className="text-xs font-medium">Safe</div>
-                          </div>
+                    </div>
+
+                    {/* Back Side */}
+                    <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-3xl bg-gradient-to-br from-blue-600 via-cyan-500 to-sky-500 border-2 border-blue-400 shadow-2xl flex flex-col items-center justify-center p-8 text-center text-white overflow-hidden">
+                      {/* Animated background */}
+                      <div className="absolute inset-0 opacity-20">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl animate-pulse"></div>
+                        <div
+                          className="absolute bottom-0 left-0 w-28 h-28 bg-white/15 rounded-full blur-xl animate-pulse"
+                          style={{ animationDelay: "1s" }}
+                        ></div>
+                      </div>
+
+                      {/* Back content */}
+                      <div className="relative z-10">
+                        {/* Large emoji */}
+                        <div
+                          className="text-6xl mb-6 animate-bounce"
+                          style={{ animationDuration: "2s" }}
+                        >
+                          {feature.emoji}
                         </div>
-                      )}
-                      
-                      {index === 1 && (
-                        <div className="flex justify-center space-x-4">
-                          <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center transform rotate-12 hover:rotate-0 transition-transform duration-300">
-                            <div className="text-2xl">🎪</div>
-                          </div>
-                          <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center transform -rotate-6 hover:rotate-0 transition-transform duration-300">
-                            <div className="text-2xl">🎲</div>
-                          </div>
-                          <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center transform rotate-6 hover:rotate-0 transition-transform duration-300">
-                            <div className="text-2xl">🎈</div>
-                          </div>
-                        </div>
-                      )}
-                      
-                      {index === 2 && (
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-center space-x-3 p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                            <div className="text-xl">🏆</div>
-                            <span className="text-sm font-medium">Licensed Professionals</span>
-                          </div>
-                          <div className="flex items-center justify-center space-x-3 p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                            <div className="text-xl">📚</div>
-                            <span className="text-sm font-medium">Child Psychology Experts</span>
-                          </div>
-                        </div>
-                      )}
+
+                        {/* Full description */}
+                        <p className="text-white/95 text-lg leading-relaxed mb-6">
+                          {feature.description}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
