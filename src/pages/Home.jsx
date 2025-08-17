@@ -541,7 +541,7 @@ const Home = () => {
           {/* Two-column layout: Text on left, CardSwap on right */}
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             {/* Left side: Text content */}
-            <div className="space-y-8 flex flex-col justify-center min-h-[500px]">
+            <div className="space-y-8 flex flex-col justify-start min-h-[500px]">
               <h2 className="text-4xl md:text-6xl font-bold text-blue-900 mb-6">
                 Happy Parents
               </h2>
@@ -588,7 +588,7 @@ const Home = () => {
             </div>
 
             {/* Right side: CardSwap Container */}
-            <div className="relative min-h-[500px] w-full flex items-center justify-center">
+            <div className="relative w-full h-[400px] flex items-start justify-center">
               {/* Desktop emoji */}
               <CardSwap
                 width={420}
