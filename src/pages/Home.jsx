@@ -347,7 +347,7 @@ const Home = () => {
                   <img
                     src={DoctorSvg}
                     alt="Friendly Doctor"
-                    className="relative z-10 drop-shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                    className="relative z-10 drop-shadow-2xl transform transition-transform duration-500"
                     style={{
                       width: "600px",
                       height: "auto",
