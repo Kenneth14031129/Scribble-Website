@@ -1,14 +1,354 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Star, Users, Target, Sparkles } from "lucide-react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  AnimatePresence,
+} from "framer-motion";
 
 import HandsSvg from "../assets/Hands1.svg";
+
+// Timeline Progress Component with Scroll-based Animation
+const TimelineProgress = ({ timelineEvents }) => {
+  const timelineRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start center", "end center"],
+  });
+
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  return (
+    <div ref={timelineRef} className="relative">
+      {/* Central Timeline Line Background */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-orange-200 via-amber-200 to-yellow-200 rounded-full opacity-30" />
+
+      {/* Animated Central Timeline Line */}
+      <motion.div
+        className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-orange-500 via-amber-500 to-yellow-500 rounded-full origin-top"
+        style={{ height: lineHeight }}
+      />
+
+      {/* Glowing Effect */}
+      <motion.div
+        className="absolute left-1/2 transform -translate-x-1/2 w-2 bg-gradient-to-b from-orange-400 via-amber-400 to-yellow-400 rounded-full blur-sm origin-top opacity-60"
+        style={{ height: lineHeight }}
+      />
+
+      {/* Timeline Events */}
+      <div className="space-y-24 relative z-10">
+        {timelineEvents.map((event, index) => {
+          const isLeft = index % 2 === 0;
+          const eventProgress = (index + 1) / timelineEvents.length;
+          const nodeOpacity = useTransform(
+            scrollYProgress,
+            [eventProgress - 0.1, eventProgress],
+            [0, 1]
+          );
+          const nodeScale = useTransform(
+            scrollYProgress,
+            [eventProgress - 0.1, eventProgress],
+            [0.5, 1]
+          );
+
+          return (
+            <motion.div
+              key={event.year}
+              initial={{ opacity: 0, x: isLeft ? -100 : 100 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className={`relative flex items-center ${
+                isLeft ? "justify-start" : "justify-end"
+              }`}
+            >
+              {/* Timeline Node with Scroll Animation */}
+              <motion.div
+                style={{ opacity: nodeOpacity, scale: nodeScale }}
+                className="absolute left-1/2 transform -translate-x-1/2 z-20"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.2 }}
+                  transition={{ duration: 0.3 }}
+                  className={`w-16 h-16 bg-gradient-to-r ${event.color} rounded-full flex items-center justify-center border-4 border-white shadow-xl`}
+                >
+                  <span className="text-2xl">{event.icon}</span>
+                </motion.div>
+
+                {/* Pulsing Ring Effect */}
+                <motion.div
+                  className={`absolute inset-0 bg-gradient-to-r ${event.color} rounded-full border-4 border-white opacity-30`}
+                  animate={{ scale: [1, 1.3, 1] }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+              </motion.div>
+
+              {/* Content Card */}
+              <motion.div
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ duration: 0.2 }}
+                className={`w-full lg:w-5/12 ${isLeft ? "pr-16" : "pl-16"}`}
+              >
+                <div className="bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-100 hover:shadow-2xl transition-all duration-300 backdrop-blur-sm">
+                  <div className={`${isLeft ? "text-left" : "text-right"}`}>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
+                      viewport={{ once: true }}
+                      className={`inline-block px-4 py-2 bg-gradient-to-r ${event.color} text-white rounded-full text-lg font-bold mb-4 shadow-lg`}
+                    >
+                      {event.year}
+                    </motion.div>
+                    <h3 className="text-2xl font-bold text-orange-900 mb-4">
+                      {event.title}
+                    </h3>
+                    <p className="text-orange-700 leading-relaxed">
+                      {event.description}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+// Multi-Card Team Carousel Component
+const TeamCarousel = ({ team }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const paginate = (newDirection) => {
+    setCurrentIndex((prevIndex) => {
+      if (newDirection === 1) {
+        return prevIndex === team.length - 1 ? 0 : prevIndex + 1;
+      } else {
+        return prevIndex === 0 ? team.length - 1 : prevIndex - 1;
+      }
+    });
+  };
+
+  // Auto-rotate carousel
+  useEffect(() => {
+    const timer = setInterval(() => {
+      paginate(1);
+    }, 6000);
+
+    return () => clearInterval(timer);
+  }, [currentIndex]);
+
+  const getCardPosition = (index) => {
+    const diff = index - currentIndex;
+    if (diff === 0) return "center";
+    if (diff === 1 || diff === -(team.length - 1)) return "right1";
+    if (diff === 2 || diff === -(team.length - 2)) return "right2";
+    if (diff === -1 || diff === team.length - 1) return "left1";
+    if (diff === -2 || diff === team.length - 2) return "left2";
+    return "hidden";
+  };
+
+  const getCardVariants = (position) => {
+    switch (position) {
+      case "center":
+        return {
+          x: 0,
+          scale: 1,
+          zIndex: 5,
+          opacity: 1,
+          rotateY: 0,
+        };
+      case "left1":
+        return {
+          x: -180,
+          scale: 0.85,
+          zIndex: 4,
+          opacity: 0.8,
+          rotateY: 20,
+        };
+      case "left2":
+        return {
+          x: -340,
+          scale: 0.7,
+          zIndex: 3,
+          opacity: 0.6,
+          rotateY: 35,
+        };
+      case "right1":
+        return {
+          x: 180,
+          scale: 0.85,
+          zIndex: 4,
+          opacity: 0.8,
+          rotateY: -20,
+        };
+      case "right2":
+        return {
+          x: 340,
+          scale: 0.7,
+          zIndex: 3,
+          opacity: 0.6,
+          rotateY: -35,
+        };
+      case "hidden":
+        return {
+          x: 0,
+          scale: 0.5,
+          zIndex: 1,
+          opacity: 0,
+          rotateY: 0,
+        };
+      default:
+        return {
+          x: 0,
+          scale: 0.5,
+          zIndex: 1,
+          opacity: 0,
+          rotateY: 0,
+        };
+    }
+  };
+
+  return (
+    <div className="relative w-full max-w-7xl mx-auto">
+      {/* Multi-Card Display */}
+      <div className="relative h-[600px] flex items-start justify-center overflow-hidden pt-16">
+        {team.map((member, index) => {
+          const position = getCardPosition(index);
+          const isSelected = index === currentIndex;
+          const variants = getCardVariants(position);
+
+          return (
+            <motion.div
+              key={member.name}
+              className="absolute w-80 cursor-pointer"
+              animate={variants}
+              transition={{
+                duration: 0.6,
+                ease: "easeInOut",
+              }}
+              onClick={() => setCurrentIndex(index)}
+              whileHover={
+                isSelected ? { scale: 1.02, y: -5 } : { scale: 0.9, y: -3 }
+              }
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              <div
+                className={`rounded-3xl shadow-2xl overflow-hidden border-2 transition-all duration-500 ${
+                  isSelected
+                    ? "border-orange-300 bg-white"
+                    : "border-gray-300 bg-gray-100"
+                }`}
+              >
+                {/* Image Section */}
+                <div className="relative overflow-hidden h-96">
+                  <motion.img
+                    src={member.image}
+                    alt={member.name}
+                    className={`w-full h-full object-cover transition-all duration-500 ${
+                      isSelected ? "" : "grayscale brightness-75"
+                    }`}
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: isSelected ? 1 : 1.1 }}
+                    transition={{ duration: 0.6 }}
+                  />
+                  <div
+                    className={`absolute inset-0 transition-all duration-500 ${
+                      isSelected
+                        ? "bg-gradient-to-t from-orange-900/30 to-transparent"
+                        : "bg-gradient-to-t from-gray-900/60 to-gray-400/30"
+                    }`}
+                  />
+                </div>
+              </div>
+
+              {/* Name and Position - Only for Selected Card */}
+              {isSelected && (
+                <motion.div
+                  className="mt-4 text-center"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                >
+                  <h3 className="text-lg font-bold mb-1 text-orange-900">
+                    {member.name}
+                  </h3>
+                  <p className="text-sm font-medium text-orange-600">
+                    {member.role}
+                  </p>
+                </motion.div>
+              )}
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="absolute top-1/2 -translate-y-1/2 -left-16 z-20">
+        <motion.button
+          whileHover={{ scale: 1.1, backgroundColor: "rgb(249 115 22)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => paginate(-1)}
+          className="w-12 h-12 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg flex items-center justify-center transition-colors duration-200"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </motion.button>
+      </div>
+
+      <div className="absolute top-1/2 -translate-y-1/2 -right-16 z-20">
+        <motion.button
+          whileHover={{ scale: 1.1, backgroundColor: "rgb(249 115 22)" }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => paginate(1)}
+          className="w-12 h-12 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg flex items-center justify-center transition-colors duration-200"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </motion.button>
+      </div>
+    </div>
+  );
+};
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [floatingElements, setFloatingElements] = useState([]);
   const heroRef = useRef(null);
+  const timelineRef = useRef(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -133,6 +473,57 @@ const About = () => {
     },
   ];
 
+  const timelineEvents = [
+    {
+      year: "2018",
+      title: "The Vision Begins",
+      description:
+        "Dr. Sarah Mitchell founded Scribble Therapy Center with a simple yet powerful vision: create a place where children feel genuinely excited to engage in their healing journey.",
+      icon: "🌱",
+      color: "from-orange-400 to-amber-400",
+    },
+    {
+      year: "2019",
+      title: "First Breakthrough",
+      description:
+        "Our innovative play therapy approach helped 50+ children in the first year. Traditional therapy settings were transformed into magical playground experiences.",
+      icon: "✨",
+      color: "from-amber-400 to-yellow-400",
+    },
+    {
+      year: "2020",
+      title: "Adapting & Growing",
+      description:
+        "During challenging times, we pioneered virtual therapy sessions for kids, ensuring continuous care while maintaining the joy and engagement children love.",
+      icon: "🌈",
+      color: "from-yellow-400 to-orange-400",
+    },
+    {
+      year: "2021",
+      title: "Expanding Our Team",
+      description:
+        "Added specialized therapists in autism support, family therapy, and behavioral care. Our multidisciplinary approach began helping more diverse needs.",
+      icon: "👥",
+      color: "from-orange-400 to-red-400",
+    },
+    {
+      year: "2023",
+      title: "Recognition & Awards",
+      description:
+        "Received the 'Child-Friendly Healthcare Excellence Award' and expanded to serve 200+ families annually with 95% success rate.",
+      icon: "🏆",
+      color: "from-red-400 to-orange-400",
+    },
+    {
+      year: "2024",
+      title: "500+ Families Served",
+      description:
+        "Reached the milestone of helping over 500 families discover joy in growth. Every scribble continues to tell a story of resilience and transformation.",
+      icon: "💫",
+      color: "from-orange-400 to-amber-400",
+    },
+  ];
+
   const team = [
     {
       name: "Dr. Sarah Mitchell",
@@ -160,6 +551,67 @@ const About = () => {
       image:
         "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face",
       fun: "Board game enthusiast and weekend hiking adventurer! 🎲",
+    },
+    {
+      name: "Dr. Emily Watson",
+      role: "Behavioral Specialist",
+      experience: "8+ years",
+      specialties: [
+        "Behavioral Therapy",
+        "ADHD Support",
+        "Learning Disabilities",
+      ],
+      image:
+        "https://images.unsplash.com/photo-1594824388295-7c64464062b3?w=300&h=300&fit=crop&crop=face",
+      fun: "Yoga instructor who loves baking organic treats for the kids! 🧘‍♀️",
+    },
+    {
+      name: "Michael Chen",
+      role: "Art & Music Therapist",
+      experience: "7+ years",
+      specialties: ["Art Therapy", "Music Therapy", "Creative Expression"],
+      image:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
+      fun: "Professional guitarist who plays at local children's hospitals! 🎸",
+    },
+    {
+      name: "Dr. Rachel Thompson",
+      role: "Developmental Psychologist",
+      experience: "11+ years",
+      specialties: [
+        "Autism Spectrum",
+        "Developmental Delays",
+        "Early Intervention",
+      ],
+      image:
+        "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=300&h=300&fit=crop&crop=face",
+      fun: "Rock climbing enthusiast and children's book author! 📚",
+    },
+    {
+      name: "Alex Rivera",
+      role: "Speech & Language Therapist",
+      experience: "9+ years",
+      specialties: [
+        "Speech Therapy",
+        "Language Development",
+        "Communication Skills",
+      ],
+      image:
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face",
+      fun: "Fluent in 4 languages and teaches pottery on weekends! 🏺",
+    },
+    {
+      name: "Dr. Sophia Lee",
+      role: "Child Psychiatrist",
+      experience: "14+ years",
+      specialties: [
+        "Child Psychiatry",
+        "Medication Management",
+        "Crisis Intervention",
+      ],
+      image:
+        "https://images.unsplash.com/photo-1594736797933-d0401ba94c3a?w=300&h=300&fit=crop&crop=face",
+      fun: "Competitive swimmer and volunteer at animal shelters! 🏊‍♀️",
     },
   ];
 
@@ -349,8 +801,11 @@ const About = () => {
         </div>
       </section>
 
-      {/* Our Story Section */}
-      <section className="py-32 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative">
+      {/* Our Journey Timeline */}
+      <section
+        ref={timelineRef}
+        className="py-32 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative overflow-hidden"
+      >
         <div
           className="absolute top-16 right-16 text-5xl animate-spin"
           style={{ animationDuration: "12s" }}
@@ -358,97 +813,44 @@ const About = () => {
           🌸
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: Story text */}
-            <div className="space-y-8">
-              <h2 className="text-4xl md:text-6xl font-bold text-orange-900 mb-6">
-                Our Story
-              </h2>
-              <div className="space-y-6 text-lg text-orange-800 leading-relaxed">
-                <p className="text-xl">
-                  🌱 <strong>Founded in 2018</strong>, Scribble Therapy Center
-                  began with a simple yet powerful vision: create a place where
-                  children feel genuinely excited to engage in their healing
-                  journey.
-                </p>
-                <p>
-                  Our founder, Dr. Sarah Mitchell, noticed that traditional
-                  therapy settings often felt intimidating to young clients. She
-                  envisioned a space that would feel more like a magical
-                  playground than a clinical environment.
-                </p>
-                <p>
-                  Today, we've helped over <strong>500 families</strong>{" "}
-                  discover the joy in growth, turning therapy sessions into
-                  adventures that children look forward to each week. Our
-                  colorful, welcoming space is designed to spark imagination
-                  while providing the safety and structure that effective
-                  therapy requires.
-                </p>
-                <div className="bg-gradient-to-r from-orange-100 to-amber-100 p-6 rounded-2xl border-l-4 border-orange-400">
-                  <p className="font-medium text-orange-900 italic">
-                    "Every scribble tells a story, every color reveals an
-                    emotion, and every session plants a seed of resilience that
-                    will bloom for years to come."
-                    <span className="block mt-2 text-sm">
-                      - Dr. Sarah Mitchell, Founder
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-20"
+          >
+            <h2 className="text-4xl md:text-6xl font-bold text-orange-900 mb-6">
+              Our Journey
+            </h2>
+            <p className="text-xl text-orange-700 max-w-3xl mx-auto leading-relaxed">
+              From a simple vision to transforming young lives - discover the
+              milestones that shaped our story ✨
+            </p>
+          </motion.div>
 
-            {/* Right: Visual element */}
-            <div className="relative">
-              <div className="bg-gradient-to-br from-orange-200 to-amber-200 rounded-3xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                <div className="bg-white rounded-2xl p-8 shadow-xl">
-                  <div className="grid grid-cols-2 gap-6 text-center">
-                    <div className="space-y-2">
-                      <div className="text-4xl font-black text-orange-600">
-                        500+
-                      </div>
-                      <div className="text-sm text-orange-800">
-                        Families Helped
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="text-4xl font-black text-amber-600">
-                        6
-                      </div>
-                      <div className="text-sm text-orange-800">
-                        Years of Care
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="text-4xl font-black text-red-500">
-                        95%
-                      </div>
-                      <div className="text-sm text-orange-800">
-                        Success Rate
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="text-4xl font-black text-yellow-500">
-                        ∞
-                      </div>
-                      <div className="text-sm text-orange-800">
-                        Smiles Created
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          {/* Timeline Container */}
+          <TimelineProgress timelineEvents={timelineEvents} />
 
-              {/* Floating decorations */}
-              <div className="absolute -top-6 -right-6 text-6xl animate-bounce">
-                📚
-              </div>
-              <div className="absolute -bottom-4 -left-4 text-5xl animate-pulse">
-                🎨
-              </div>
+          {/* Founder Quote */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="mt-32 text-center"
+          >
+            <div className="bg-gradient-to-r from-orange-100 to-amber-100 p-8 rounded-3xl border-l-4 border-orange-400 max-w-4xl mx-auto">
+              <p className="text-xl font-medium text-orange-900 italic mb-4">
+                "Every scribble tells a story, every color reveals an emotion,
+                and every session plants a seed of resilience that will bloom
+                for years to come."
+              </p>
+              <p className="text-orange-700 font-semibold">
+                - Dr. Sarah Mitchell, Founder & Clinical Director
+              </p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -507,79 +909,26 @@ const About = () => {
         </div>
       </section>
 
-      {/* Meet Our Team Section */}
-      <section className="py-32 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative">
-        <div className="absolute top-20 left-20 text-5xl animate-pulse">👨‍👩‍👧‍👦</div>
-        <div className="absolute bottom-20 right-20 text-4xl animate-wave">
-          🌟
-        </div>
-
+      {/* Meet Our Team Carousel */}
+      <section className="pt-32 pb-16 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-0"
+          >
             <h2 className="text-4xl md:text-6xl font-bold text-orange-900 mb-6">
               Meet Our Team
             </h2>
             <p className="text-xl text-orange-700 max-w-3xl mx-auto leading-relaxed">
-              Passionate professionals dedicated to helping every child thrive
-              🌟
+              Passionate professionals dedicated to helping every child thrive -
+              click to explore! 🌟
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-12">
-            {team.map((member, index) => (
-              <div
-                key={member.name}
-                className="group bg-white rounded-3xl shadow-2xl overflow-hidden hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-orange-100"
-              >
-                {/* Profile Image */}
-                <div className="relative overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-orange-900/20 to-transparent"></div>
-                  <div className="absolute bottom-4 right-4 text-2xl animate-pulse">
-                    {index === 0 ? "🌸" : index === 1 ? "🎈" : "🌟"}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-8 space-y-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-orange-900 mb-2">
-                      {member.name}
-                    </h3>
-                    <p className="text-orange-600 font-medium text-lg">
-                      {member.role}
-                    </p>
-                    <p className="text-amber-600 font-semibold">
-                      {member.experience} experience
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-bold text-orange-800 mb-2">
-                      Specialties:
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {member.specialties.map((specialty) => (
-                        <span
-                          key={specialty}
-                          className="px-3 py-1 bg-gradient-to-r from-orange-100 to-amber-100 text-orange-800 rounded-full text-sm font-medium border border-orange-200"
-                        >
-                          {specialty}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-4 rounded-2xl border border-orange-200">
-                    <p className="text-orange-800 italic">{member.fun}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div>
+            <TeamCarousel team={team} />
           </div>
         </div>
       </section>
