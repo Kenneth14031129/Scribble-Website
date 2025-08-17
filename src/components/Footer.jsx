@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import HandsSvg from "../assets/Hands.svg";
+import HandsSvg from "../assets/Hands1.svg";
 
 const Footer = () => {
   const socialLinks = [
@@ -36,7 +36,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-gradient-to-br from-blue-100 via-cyan-50 to-sky-100 overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-16 lg:py-20">
           {/* Main Footer Content */}
@@ -45,20 +45,20 @@ const Footer = () => {
             <div className="lg:col-span-4">
               <Link to="/" className="flex items-center space-x-3 group mb-8">
                 <div className="relative">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-600 via-cyan-500 to-sky-500 rounded-xl rotate-45 group-hover:rotate-[50deg] transition-transform duration-500 shadow-lg"></div>
-                  <div className="absolute inset-0 w-12 h-12 bg-gradient-to-br from-cyan-500 via-blue-500 to-indigo-500 rounded-xl rotate-12 group-hover:rotate-[15deg] transition-transform duration-500 opacity-70"></div>
+                  <div className="w-12 h-12 bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-500 rounded-xl rotate-45 group-hover:rotate-[50deg] transition-transform duration-500 shadow-lg"></div>
+                  <div className="absolute inset-0 w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-xl rotate-12 group-hover:rotate-[15deg] transition-transform duration-500 opacity-70"></div>
                 </div>
                 <div>
-                  <span className="block text-2xl font-black bg-gradient-to-r from-blue-600 via-cyan-500 to-sky-500 bg-clip-text text-transparent">
+                  <span className="block text-2xl font-black bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
                     Scribble
                   </span>
-                  <span className="block text-sm text-blue-700 font-medium">
+                  <span className="block text-sm text-orange-700 font-medium">
                     Therapy Center
                   </span>
                 </div>
               </Link>
 
-              <p className="text-blue-800 text-lg leading-relaxed mb-8 max-w-md">
+              <p className="text-orange-800 text-lg leading-relaxed mb-8 max-w-md">
                 Where healing happens through play and every child feels safe to
                 grow. Professional therapy that kids actually love! 🌱
               </p>
@@ -69,19 +69,19 @@ const Footer = () => {
                   <a
                     key={social.name}
                     href={social.href}
-                    className="group relative p-3 rounded-2xl bg-blue-100/50 backdrop-blur-sm border border-blue-200/50 hover:bg-blue-200/60 hover:border-blue-300/60 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1"
+                    className="group relative p-3 rounded-2xl bg-orange-100/50 backdrop-blur-sm border border-orange-200/50 hover:bg-orange-200/60 hover:border-orange-300/60 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1"
                     aria-label={social.name}
                   >
                     <div className="flex items-center space-x-2">
                       <svg
-                        className="w-4 h-4 text-blue-600 group-hover:text-blue-800 transition-colors duration-300"
+                        className="w-4 h-4 text-orange-600 group-hover:text-orange-800 transition-colors duration-300"
                         fill="currentColor"
                         viewBox="0 0 24 24"
                       >
                         <path d={social.icon} />
                       </svg>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-300/20 to-cyan-300/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-300/20 to-amber-300/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </a>
                 ))}
               </div>
@@ -92,16 +92,16 @@ const Footer = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
                 {/* Services */}
                 <div>
-                  <h3 className="text-blue-900 font-bold text-sm uppercase tracking-wider mb-6 relative flex items-center space-x-2">
+                  <h3 className="text-orange-900 font-bold text-sm uppercase tracking-wider mb-6 relative flex items-center space-x-2">
                     <span>🎨 Our Services</span>
-                    <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full"></div>
+                    <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full"></div>
                   </h3>
                   <ul className="space-y-4">
                     {footerLinks.services.map((link) => (
                       <li key={link.name}>
                         <Link
                           to={link.href}
-                          className="text-blue-700 hover:text-blue-900 transition-colors duration-300 text-sm flex items-center space-x-2 group"
+                          className="text-orange-700 hover:text-orange-900 transition-colors duration-300 text-sm flex items-center space-x-2 group"
                         >
                           <span>{link.name}</span>
                         </Link>
@@ -112,16 +112,16 @@ const Footer = () => {
 
                 {/* Company */}
                 <div>
-                  <h3 className="text-blue-900 font-bold text-sm uppercase tracking-wider mb-6 relative flex items-center space-x-2">
+                  <h3 className="text-orange-900 font-bold text-sm uppercase tracking-wider mb-6 relative flex items-center space-x-2">
                     <span>🏠 Company</span>
-                    <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-sky-400 to-blue-400 rounded-full"></div>
+                    <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"></div>
                   </h3>
                   <ul className="space-y-4">
                     {footerLinks.company.map((link) => (
                       <li key={link.name}>
                         <Link
                           to={link.href}
-                          className="text-blue-700 hover:text-blue-900 transition-colors duration-300 text-sm flex items-center space-x-2 group"
+                          className="text-orange-700 hover:text-orange-900 transition-colors duration-300 text-sm flex items-center space-x-2 group"
                         >
                           <span>{link.name}</span>
                         </Link>
@@ -145,14 +145,14 @@ const Footer = () => {
           </div>
 
           {/* Bottom Section */}
-          <div className="mt-16 pt-8 border-t border-blue-200/30">
+          <div className="mt-16 pt-8 border-t border-orange-200/30">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
               <div className="flex items-center space-x-4">
-                <p className="text-blue-700 text-sm">
+                <p className="text-orange-700 text-sm">
                   © 2024 Scribble Therapy Center. All rights reserved.
                 </p>
-                <div className="h-4 w-px bg-blue-300/30"></div>
-                <p className="text-blue-600 text-xs flex items-center space-x-1">
+                <div className="h-4 w-px bg-orange-300/30"></div>
+                <p className="text-orange-600 text-xs flex items-center space-x-1">
                   <span>Made with</span>
                   <span className="text-red-400 animate-pulse">💙</span>
                   <span>for families</span>
@@ -160,9 +160,9 @@ const Footer = () => {
               </div>
 
               <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2 px-4 py-2 bg-blue-100/60 border border-blue-200/50 rounded-full">
+                <div className="flex items-center space-x-2 px-4 py-2 bg-orange-100/60 border border-orange-200/50 rounded-full">
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-blue-700 text-xs">
+                  <span className="text-orange-700 text-xs">
                     Licensed & Certified
                   </span>
                 </div>
@@ -171,7 +171,7 @@ const Footer = () => {
                   onClick={() =>
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
-                  className="group flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-blue-200/40 to-cyan-200/40 border border-blue-300/40 text-blue-700 text-sm rounded-full hover:from-blue-300/50 hover:to-cyan-300/50 hover:border-blue-400/60 transition-all duration-300"
+                  className="group flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-200/40 to-amber-200/40 border border-orange-300/40 text-orange-700 text-sm rounded-full hover:from-orange-300/50 hover:to-amber-300/50 hover:border-orange-400/60 transition-all duration-300"
                 >
                   <svg
                     className="w-4 h-4 group-hover:-translate-y-1 transition-transform duration-300"
@@ -195,7 +195,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom gradient line */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-400/40 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-orange-400/40 to-transparent"></div>
     </footer>
   );
 };

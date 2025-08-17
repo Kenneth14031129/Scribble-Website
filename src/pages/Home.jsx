@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import SafeSvg from "../assets/Safe.svg";
-import FunSvg from "../assets/Fun.svg";
-import ExpertSvg from "../assets/Expert.svg";
-import DoctorSvg from "../assets/Doctor.svg";
+import SafeSvg from "../assets/Safe1.svg";
+import FunSvg from "../assets/Fun1.svg";
+import ExpertSvg from "../assets/Expert1.svg";
+import DoctorSvg from "../assets/Doctor1.svg";
 import CardSwap, { Card } from "../CardSwap/CardSwap";
 
 const Home = () => {
@@ -58,7 +58,7 @@ const Home = () => {
       description:
         "A warm, secure environment where children feel comfortable to express themselves and grow",
       emoji: "🛡️",
-      color: "from-blue-400 to-cyan-400",
+      color: "from-orange-400 to-amber-400",
     },
     {
       icon: "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707",
@@ -66,7 +66,7 @@ const Home = () => {
       description:
         "Interactive therapy sessions that feel like play, making healing an enjoyable journey",
       emoji: "🎨",
-      color: "from-cyan-400 to-blue-400",
+      color: "from-amber-400 to-orange-400",
     },
     {
       icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
@@ -74,7 +74,7 @@ const Home = () => {
       description:
         "Licensed child therapists specialized in helping kids overcome challenges and thrive",
       emoji: "👨‍⚕️",
-      color: "from-blue-400 to-indigo-400",
+      color: "from-orange-400 to-red-400",
     },
   ];
 
@@ -111,10 +111,10 @@ const Home = () => {
   const renderFloatingShape = (element) => {
     const baseClasses = "absolute animate-float opacity-40";
     const colors = [
-      "bg-blue-300",
-      "bg-cyan-300",
-      "bg-sky-300",
-      "bg-indigo-300",
+      "bg-orange-300",
+      "bg-amber-300",
+      "bg-yellow-300",
+      "bg-red-300",
     ];
     const colorClass = colors[element.id % colors.length];
 
@@ -188,7 +188,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-cyan-50 to-sky-100">
+    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100">
       {/* Floating Animation Styles + 3D Card Flip */}
       <style jsx>{`
         @keyframes float {
@@ -232,9 +232,9 @@ const Home = () => {
         {/* Dynamic Blue Gradient Background */}
         <div className="absolute inset-0">
           <div
-            className="absolute inset-0 bg-gradient-to-br from-blue-200 via-cyan-100 to-sky-200 transition-all duration-1000"
+            className="absolute inset-0 bg-gradient-to-br from-orange-200 via-amber-100 to-yellow-200 transition-all duration-1000"
             style={{
-              background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(59, 130, 246, 0.2) 0%, transparent 50%)`,
+              background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(249, 115, 22, 0.2) 0%, transparent 50%)`,
             }}
           />
 
@@ -276,10 +276,10 @@ const Home = () => {
                 }`}
               >
                 <h1 className="text-3xl md:text-5xl lg:text-6xl font-black leading-none mb-8">
-                  <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-sky-500 bg-clip-text text-transparent">
+                  <span className="block bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
                     Scribble
                   </span>
-                  <span className="block bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
+                  <span className="block bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 bg-clip-text text-transparent">
                     Therapy Center
                   </span>
                 </h1>
@@ -293,11 +293,11 @@ const Home = () => {
                     : "opacity-0 translate-y-8"
                 }`}
               >
-                <p className="text-xl md:text-2xl text-blue-800 leading-relaxed mb-8">
+                <p className="text-xl md:text-2xl text-orange-800 leading-relaxed mb-8">
                   Where healing happens through play and every child feels safe
                   to grow 🌱
                   <br className="hidden md:block" />
-                  <span className="text-blue-900 font-medium">
+                  <span className="text-orange-900 font-medium">
                     Professional therapy that kids actually love!
                   </span>
                 </p>
@@ -313,10 +313,10 @@ const Home = () => {
               >
                 <Link
                   to="/contact"
-                  className="group relative px-12 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold rounded-full hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 text-lg"
+                  className="group relative px-12 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-full hover:from-orange-600 hover:to-amber-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/25 text-lg"
                 >
                   <span className="relative z-10 flex items-center space-x-2">
-                    <span>🎨 Start Their Journey</span>
+                    <span>Start Their Journey</span>
                   </span>
                 </Link>
               </div>
@@ -334,7 +334,7 @@ const Home = () => {
                 <div className="relative">
                   {/* Decorative background circle */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-br from-blue-200/30 via-cyan-100/20 to-sky-200/30 rounded-full blur-3xl animate-pulse"
+                    className="absolute inset-0 bg-gradient-to-br from-orange-200/30 via-amber-100/20 to-yellow-200/30 rounded-full blur-3xl animate-pulse"
                     style={{
                       width: "800px",
                       height: "800px",
@@ -421,7 +421,7 @@ const Home = () => {
       {/* Features Section - Why Kids Love Us */}
       <section
         ref={featuresRef}
-        className="py-32 bg-gradient-to-b from-blue-50 via-white to-cyan-50 relative"
+        className="py-32 bg-gradient-to-b from-orange-50 via-white to-amber-50 relative"
       >
         {/* Decorative elements */}
         <div
@@ -439,10 +439,10 @@ const Home = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold text-blue-900 mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold text-orange-900 mb-6">
               Our Therapy
             </h2>
-            <p className="text-xl text-blue-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-orange-700 max-w-3xl mx-auto leading-relaxed">
               We make therapy feel like the best playtime ever, where every
               child discovers their superpowers! 🦸‍♀️🦸‍♂️
             </p>
@@ -475,7 +475,7 @@ const Home = () => {
                   {/* Card Container with 3D Flip */}
                   <div className="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
                     {/* Front Side - SVG Only */}
-                    <div className="absolute inset-0 w-full h-full backface-hidden rounded-3xl bg-gradient-to-br from-white via-blue-50 to-cyan-50 border-2 border-blue-200 shadow-xl flex items-center justify-center p-8">
+                    <div className="absolute inset-0 w-full h-full backface-hidden rounded-3xl bg-gradient-to-br from-white via-orange-50 to-amber-50 border-2 border-orange-200 shadow-xl flex items-center justify-center p-8">
                       {/* SVG Container */}
                       <div className="w-full h-full flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
                         <img
@@ -487,7 +487,7 @@ const Home = () => {
                     </div>
 
                     {/* Back Side */}
-                    <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-3xl bg-gradient-to-br from-blue-600 via-cyan-500 to-sky-500 border-2 border-blue-400 shadow-2xl flex flex-col items-center justify-center p-8 text-center text-white overflow-hidden">
+                    <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-3xl bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-500 border-2 border-orange-400 shadow-2xl flex flex-col items-center justify-center p-8 text-center text-white overflow-hidden">
                       {/* Animated background */}
                       <div className="absolute inset-0 opacity-20">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl animate-pulse"></div>
@@ -522,7 +522,7 @@ const Home = () => {
       </section>
 
       {/* Parent Testimonials Section */}
-      <section className="py-32 bg-gradient-to-br from-white via-blue-50 to-cyan-50 relative">
+      <section className="py-32 bg-gradient-to-br from-white via-orange-50 to-amber-50 relative">
         {/* Decorative background elements */}
         <div
           className="absolute top-16 right-16 text-5xl animate-bounce"
@@ -542,44 +542,46 @@ const Home = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             {/* Left side: Text content */}
             <div className="space-y-8 flex flex-col justify-start min-h-[500px]">
-              <h2 className="text-4xl md:text-6xl font-bold text-blue-900 mb-6">
+              <h2 className="text-4xl md:text-6xl font-bold text-orange-900 mb-6">
                 Happy Parents
               </h2>
-              <p className="text-xl text-blue-700 leading-relaxed mb-8">
+              <p className="text-xl text-orange-700 leading-relaxed mb-8">
                 Real families sharing their amazing transformation stories 💫
               </p>
 
               {/* Additional content */}
               <div className="space-y-6">
-                <div className="flex items-center space-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-blue-200/50 transform hover:scale-105 transition-all duration-300">
+                <div className="flex items-center space-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-orange-200/50 transform hover:scale-105 transition-all duration-300">
                   <div className="text-3xl">💬</div>
                   <div>
-                    <h3 className="font-bold text-blue-900 text-lg">
+                    <h3 className="font-bold text-orange-900 text-lg">
                       Real Stories
                     </h3>
-                    <p className="text-blue-700">
+                    <p className="text-orange-700">
                       Authentic experiences from loving families
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-blue-200/50 transform hover:scale-105 transition-all duration-300">
+                <div className="flex items-center space-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-orange-200/50 transform hover:scale-105 transition-all duration-300">
                   <div className="text-3xl">🌟</div>
                   <div>
-                    <h3 className="font-bold text-blue-900 text-lg">
+                    <h3 className="font-bold text-orange-900 text-lg">
                       Excellent Star Rated
                     </h3>
-                    <p className="text-blue-700">Excellent care and results</p>
+                    <p className="text-orange-700">
+                      Excellent care and results
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-blue-200/50 transform hover:scale-105 transition-all duration-300">
+                <div className="flex items-center space-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-orange-200/50 transform hover:scale-105 transition-all duration-300">
                   <div className="text-3xl">🎯</div>
                   <div>
-                    <h3 className="font-bold text-blue-900 text-lg">
+                    <h3 className="font-bold text-orange-900 text-lg">
                       Proven Results
                     </h3>
-                    <p className="text-blue-700">
+                    <p className="text-orange-700">
                       Transformative outcomes for every child
                     </p>
                   </div>
@@ -603,7 +605,7 @@ const Home = () => {
                 {testimonials.map((testimonial, index) => (
                   <Card
                     key={testimonial.name}
-                    customClass="bg-gradient-to-br from-white via-blue-50 to-cyan-50 border-2 border-blue-200/50 shadow-2xl backdrop-blur-xl"
+                    customClass="bg-gradient-to-br from-white via-orange-50 to-amber-50 border-2 border-orange-200/50 shadow-2xl backdrop-blur-xl"
                   >
                     <div className="w-full h-full p-6 flex flex-col justify-between relative overflow-hidden">
                       {/* Floating decoration */}
@@ -612,14 +614,14 @@ const Home = () => {
                       </div>
 
                       {/* Quote mark */}
-                      <div className="absolute -top-2 -left-2 text-4xl text-blue-300/40 font-serif">
+                      <div className="absolute -top-2 -left-2 text-4xl text-orange-300/40 font-serif">
                         "
                       </div>
 
                       {/* Main content */}
                       <div className="relative z-10 flex-1 flex flex-col justify-center">
                         {/* Testimonial text */}
-                        <blockquote className="text-blue-900/90 font-medium leading-relaxed mb-4 italic text-center">
+                        <blockquote className="text-orange-900/90 font-medium leading-relaxed mb-4 italic text-center">
                           "{testimonial.content}"
                         </blockquote>
 
@@ -631,10 +633,10 @@ const Home = () => {
                             className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md"
                           />
                           <div className="text-center">
-                            <div className="font-bold text-blue-900 text-sm">
+                            <div className="font-bold text-orange-900 text-sm">
                               {testimonial.name}
                             </div>
-                            <div className="text-blue-600 text-xs font-medium">
+                            <div className="text-orange-600 text-xs font-medium">
                               Parent of {testimonial.child}
                             </div>
                           </div>
@@ -651,7 +653,7 @@ const Home = () => {
                       </div>
 
                       {/* Bottom gradient border */}
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-cyan-400 to-sky-400 rounded-b-xl"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-amber-400 to-yellow-400 rounded-b-xl"></div>
 
                       {/* Floating heart */}
                       <div className="absolute bottom-2 right-2 text-lg animate-pulse">
@@ -667,9 +669,9 @@ const Home = () => {
       </section>
 
       {/* Fun CTA Section */}
-      <section className="py-32 bg-gradient-to-br from-blue-600 via-cyan-500 to-sky-400 relative overflow-hidden">
+      <section className="py-32 bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-400 relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-400/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-amber-400/20"></div>
           <div
             className="absolute inset-0 transition-all duration-1000"
             style={{
@@ -706,7 +708,7 @@ const Home = () => {
             </span>
           </h2>
 
-          <p className="text-xl md:text-2xl text-blue-100 mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-orange-100 mb-12 max-w-3xl mx-auto leading-relaxed">
             Book a free consultation and let's create a personalized therapy
             plan that your child will love!
             <span className="text-white font-bold">
@@ -717,7 +719,7 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
             <Link
               to="/contact"
-              className="group relative px-12 py-5 bg-white text-blue-600 font-black rounded-full hover:bg-yellow-100 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-white/25 text-xl border-4 border-yellow-300"
+              className="group relative px-12 py-5 bg-white text-orange-600 font-black rounded-full hover:bg-orange-100 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-white/25 text-xl border-4 border-orange-300"
             >
               <span className="relative z-10 flex items-center space-x-2">
                 <span>🎯 Book Free Session</span>
