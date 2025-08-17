@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SafeSvg from "../assets/Safe.svg";
 import FunSvg from "../assets/Fun.svg";
 import ExpertSvg from "../assets/Expert.svg";
+import CardSwap, { Card } from "../CardSwap/CardSwap";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -370,12 +371,6 @@ const Home = () => {
         >
           ✨
         </div>
-        <div
-          className="absolute bottom-20 left-1/4 text-6xl animate-bounce"
-          style={{ animationDuration: "4s" }}
-        >
-          🦋
-        </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
@@ -478,60 +473,130 @@ const Home = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold text-blue-900 mb-6">
-              Happy Parents
-            </h2>
-            <p className="text-xl text-blue-700 max-w-3xl mx-auto leading-relaxed">
-              Real families sharing their amazing transformation stories 💫
-            </p>
-          </div>
+          {/* Two-column layout: Text on left, CardSwap on right */}
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            {/* Left side: Text content */}
+            <div className="space-y-8 flex flex-col justify-center min-h-[500px]">
+              <h2 className="text-4xl md:text-6xl font-bold text-blue-900 mb-6">
+                Happy Parents
+              </h2>
+              <p className="text-xl text-blue-700 leading-relaxed mb-8">
+                Real families sharing their amazing transformation stories 💫
+              </p>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={testimonial.name}
-                className="group p-8 bg-white/90 backdrop-blur-sm rounded-3xl border-2 border-blue-200 hover:border-cyan-300 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:rotate-1"
-                style={{ animationDelay: `${index * 0.15}s` }}
-              >
-                <div className="flex items-center mb-6">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-14 h-14 rounded-full object-cover mr-4 border-2 border-blue-300"
-                  />
+              {/* Additional content */}
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-blue-200/50 transform hover:scale-105 transition-all duration-300">
+                  <div className="text-3xl">💬</div>
                   <div>
-                    <div className="font-bold text-blue-900">
-                      {testimonial.name}
-                    </div>
-                    <div className="text-sm text-blue-600 font-medium">
-                      {testimonial.role}
-                    </div>
-                    <div className="text-xs text-cyan-600">
-                      {testimonial.child}
-                    </div>
+                    <h3 className="font-bold text-blue-900 text-lg">
+                      Real Stories
+                    </h3>
+                    <p className="text-blue-700">
+                      Authentic experiences from loving families
+                    </p>
                   </div>
                 </div>
 
-                <p className="text-blue-800 leading-relaxed text-lg mb-6">
-                  "{testimonial.content}"
-                </p>
-
-                <div className="flex items-center justify-between">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-2xl text-yellow-400">
-                        ⭐
-                      </span>
-                    ))}
+                <div className="flex items-center space-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-blue-200/50 transform hover:scale-105 transition-all duration-300">
+                  <div className="text-3xl">🌟</div>
+                  <div>
+                    <h3 className="font-bold text-blue-900 text-lg">
+                      Excellent Star Rated
+                    </h3>
+                    <p className="text-blue-700">Excellent care and results</p>
                   </div>
-                  <div className="text-2xl">💙</div>
                 </div>
 
-                {/* Cute decorative bottom border */}
-                <div className="mt-6 h-2 bg-gradient-to-r from-blue-300 via-cyan-300 to-sky-300 rounded-full group-hover:animate-pulse"></div>
+                <div className="flex items-center space-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-2xl border border-blue-200/50 transform hover:scale-105 transition-all duration-300">
+                  <div className="text-3xl">🎯</div>
+                  <div>
+                    <h3 className="font-bold text-blue-900 text-lg">
+                      Proven Results
+                    </h3>
+                    <p className="text-blue-700">
+                      Transformative outcomes for every child
+                    </p>
+                  </div>
+                </div>
               </div>
-            ))}
+            </div>
+
+            {/* Right side: CardSwap Container */}
+            <div className="relative min-h-[500px] w-full flex items-center justify-center">
+              {/* Desktop emoji */}
+              <CardSwap
+                width={420}
+                height={320}
+                cardDistance={40}
+                verticalDistance={50}
+                delay={4000}
+                pauseOnHover={true}
+                skewAmount={4}
+                easing="elastic"
+              >
+                {testimonials.map((testimonial, index) => (
+                  <Card
+                    key={testimonial.name}
+                    customClass="bg-gradient-to-br from-white via-blue-50 to-cyan-50 border-2 border-blue-200/50 shadow-2xl backdrop-blur-xl"
+                  >
+                    <div className="w-full h-full p-6 flex flex-col justify-between relative overflow-hidden">
+                      {/* Floating decoration */}
+                      <div className="absolute top-4 right-4 text-2xl opacity-60">
+                        {index === 0 ? "🌟" : index === 1 ? "💫" : "✨"}
+                      </div>
+
+                      {/* Quote mark */}
+                      <div className="absolute -top-2 -left-2 text-4xl text-blue-300/40 font-serif">
+                        "
+                      </div>
+
+                      {/* Main content */}
+                      <div className="relative z-10 flex-1 flex flex-col justify-center">
+                        {/* Testimonial text */}
+                        <blockquote className="text-blue-900/90 font-medium leading-relaxed mb-4 italic text-center">
+                          "{testimonial.content}"
+                        </blockquote>
+
+                        {/* Author info */}
+                        <div className="flex items-center justify-center space-x-3 mb-4">
+                          <img
+                            src={testimonial.image}
+                            alt={testimonial.name}
+                            className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md"
+                          />
+                          <div className="text-center">
+                            <div className="font-bold text-blue-900 text-sm">
+                              {testimonial.name}
+                            </div>
+                            <div className="text-blue-600 text-xs font-medium">
+                              Parent of {testimonial.child}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Star rating */}
+                        <div className="flex justify-center mb-2">
+                          {[...Array(5)].map((_, i) => (
+                            <span key={i} className="text-yellow-400 text-lg">
+                              ⭐
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Bottom gradient border */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-cyan-400 to-sky-400 rounded-b-xl"></div>
+
+                      {/* Floating heart */}
+                      <div className="absolute bottom-2 right-2 text-lg animate-pulse">
+                        💙
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </CardSwap>
+            </div>
           </div>
         </div>
       </section>
@@ -562,12 +627,6 @@ const Home = () => {
           🌟
         </div>
         <div
-          className="absolute bottom-10 left-1/4 text-7xl animate-pulse"
-          style={{ animationDuration: "2s" }}
-        >
-          🌈
-        </div>
-        <div
           className="absolute bottom-20 right-10 text-5xl animate-bounce"
           style={{ animationDuration: "4s" }}
         >
@@ -575,13 +634,6 @@ const Home = () => {
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <div
-            className="text-8xl mb-8 animate-bounce"
-            style={{ animationDuration: "2s" }}
-          >
-            🎨
-          </div>
-
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8">
             Ready to Start Your
             <span className="block bg-gradient-to-r from-yellow-200 to-orange-200 bg-clip-text text-transparent">
@@ -615,26 +667,6 @@ const Home = () => {
                 <span>💫 Learn More</span>
               </span>
             </Link>
-          </div>
-
-          {/* Trust indicators */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-            <div className="text-center">
-              <div className="text-3xl mb-2">🏆</div>
-              <div className="text-white font-semibold text-sm">Licensed</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl mb-2">🛡️</div>
-              <div className="text-white font-semibold text-sm">Safe</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl mb-2">😊</div>
-              <div className="text-white font-semibold text-sm">Fun</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl mb-2">💙</div>
-              <div className="text-white font-semibold text-sm">Caring</div>
-            </div>
           </div>
         </div>
       </section>
