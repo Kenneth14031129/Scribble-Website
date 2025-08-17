@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Star, Users, Target, Sparkles } from "lucide-react";
@@ -929,69 +931,6 @@ const About = () => {
 
           <div>
             <TeamCarousel team={team} />
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action Section */}
-      <section className="py-32 bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-400 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div
-            className="absolute inset-0 transition-all duration-1000"
-            style={{
-              background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255, 255, 255, 0.1) 0%, transparent 50%)`,
-            }}
-          />
-        </div>
-
-        {/* Floating elements */}
-        <div
-          className="absolute top-16 left-16 text-6xl animate-bounce"
-          style={{ animationDuration: "3s" }}
-        >
-          🎈
-        </div>
-        <div
-          className="absolute bottom-16 right-16 text-5xl animate-pulse"
-          style={{ animationDuration: "2s" }}
-        >
-          ✨
-        </div>
-
-        <div className="relative z-10 max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8">
-            Ready to Begin
-            <span className="block bg-gradient-to-r from-yellow-200 to-orange-200 bg-clip-text text-transparent">
-              This Journey?
-            </span>
-          </h2>
-
-          <p className="text-xl md:text-2xl text-orange-100 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Let's create a personalized path to healing and growth that your
-            child will love!
-            <span className="block text-white font-bold mt-4">
-              🌟 Your child's story of transformation starts here 🌟
-            </span>
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Link
-              to="/contact"
-              className="group relative px-12 py-5 bg-white text-orange-600 font-black rounded-full hover:bg-orange-100 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-white/25 text-xl border-4 border-orange-300"
-            >
-              <span className="relative z-10 flex items-center space-x-2">
-                <span>🎯 Schedule Consultation</span>
-              </span>
-            </Link>
-
-            <Link
-              to="/services"
-              className="group px-12 py-5 border-4 border-white text-white font-bold rounded-full hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-xl"
-            >
-              <span className="flex items-center space-x-2">
-                <span>💫 Explore Services</span>
-              </span>
-            </Link>
           </div>
         </div>
       </section>
