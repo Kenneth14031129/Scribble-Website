@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import SafeSvg from "../assets/Safe.svg";
 import FunSvg from "../assets/Fun.svg";
 import ExpertSvg from "../assets/Expert.svg";
+import DoctorSvg from "../assets/Doctor.svg";
 import CardSwap, { Card } from "../CardSwap/CardSwap";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [scrollY, setScrollY] = useState(0);
+  const [setScrollY] = useState(0);
   const [floatingElements, setFloatingElements] = useState([]);
   const heroRef = useRef(null);
   const featuresRef = useRef(null);
@@ -49,13 +50,6 @@ const Home = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const stats = [
-    { number: "500+", label: "Happy Kids", emoji: "😊" },
-    { number: "50+", label: "Therapists", emoji: "👩‍⚕️" },
-    { number: "24/7", label: "Care Support", emoji: "🤗" },
-    { number: "5", label: "Parent Rating", emoji: "⭐" },
-  ];
 
   const features = [
     {
@@ -249,12 +243,6 @@ const Home = () => {
 
           {/* Additional decorative elements */}
           <div
-            className="absolute top-10 right-10 text-6xl animate-bounce"
-            style={{ animationDuration: "3s" }}
-          >
-            🌟
-          </div>
-          <div
             className="absolute top-1/4 left-10 text-4xl animate-pulse"
             style={{ animationDuration: "2s" }}
           >
@@ -274,81 +262,158 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-          {/* Kid-Friendly Main Headline */}
-          <div
-            className={`transition-all duration-1000 delay-300 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            <h1 className="text-5xl md:text-7xl lg:text-7xl font-black leading-none mb-8">
-              <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-sky-500 bg-clip-text text-transparent">
-                Scribble Therapy Center
-              </span>
-            </h1>
-          </div>
-
-          {/* Warm, Parent-Focused Subtitle */}
-          <div
-            className={`transition-all duration-1000 delay-500 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            <p className="text-xl md:text-2xl text-blue-800 max-w-4xl mx-auto leading-relaxed mb-16">
-              Where healing happens through play and every child feels safe to
-              grow 🌱
-              <br className="hidden md:block" />
-              <span className="text-blue-900 font-medium">
-                Professional therapy that kids actually love!
-              </span>
-            </p>
-          </div>
-
-          {/* Fun CTA Buttons */}
-          <div
-            className={`flex flex-col sm:flex-row items-center justify-center gap-6 mb-20 transition-all duration-1000 delay-700 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            <Link
-              to="/contact"
-              className="group relative px-12 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold rounded-full hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 text-lg"
-            >
-              <span className="relative z-10 flex items-center space-x-2">
-                <span>🎨 Start Their Journey</span>
-              </span>
-            </Link>
-          </div>
-
-          {/* Fun Stats with Emojis */}
-          <div
-            className={`grid grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-1000 delay-900 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            {stats.map((stat, index) => (
+        <div className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          {/* Two-column layout: Text on left, Doctor SVG on right */}
+          <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[calc(100vh-160px)]">
+            {/* Left side: Text content */}
+            <div className="space-y-8 text-center lg:text-left">
+              {/* Kid-Friendly Main Headline */}
               <div
-                key={stat.label}
-                className="group p-6 bg-white/90 backdrop-blur-sm border-2 border-blue-200 rounded-3xl hover:border-blue-300 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 hover:rotate-1"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`transition-all duration-1000 delay-300 ${
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                }`}
               >
-                <div className="text-4xl mb-2">{stat.emoji}</div>
-                <div className="text-3xl md:text-4xl font-bold text-blue-800 mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-sm text-blue-600 font-semibold">
-                  {stat.label}
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-black leading-none mb-8">
+                  <span className="block bg-gradient-to-r from-blue-600 via-cyan-500 to-sky-500 bg-clip-text text-transparent">
+                    Scribble
+                  </span>
+                  <span className="block bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
+                    Therapy Center
+                  </span>
+                </h1>
+              </div>
+
+              {/* Warm, Parent-Focused Subtitle */}
+              <div
+                className={`transition-all duration-1000 delay-500 ${
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                }`}
+              >
+                <p className="text-xl md:text-2xl text-blue-800 leading-relaxed mb-8">
+                  Where healing happens through play and every child feels safe
+                  to grow 🌱
+                  <br className="hidden md:block" />
+                  <span className="text-blue-900 font-medium">
+                    Professional therapy that kids actually love!
+                  </span>
+                </p>
+              </div>
+
+              {/* Fun CTA Buttons */}
+              <div
+                className={`flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-6 mb-12 transition-all duration-1000 delay-700 ${
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                }`}
+              >
+                <Link
+                  to="/contact"
+                  className="group relative px-12 py-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold rounded-full hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25 text-lg"
+                >
+                  <span className="relative z-10 flex items-center space-x-2">
+                    <span>🎨 Start Their Journey</span>
+                  </span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Right side: Doctor SVG */}
+            <div className="relative flex items-center justify-center lg:justify-end overflow-visible">
+              <div
+                className={`transition-all duration-1000 delay-600 ${
+                  isVisible
+                    ? "opacity-100 translate-y-0 scale-100"
+                    : "opacity-0 translate-y-8 scale-95"
+                }`}
+              >
+                <div className="relative">
+                  {/* Decorative background circle */}
+                  <div
+                    className="absolute inset-0 bg-gradient-to-br from-blue-200/30 via-cyan-100/20 to-sky-200/30 rounded-full blur-3xl animate-pulse"
+                    style={{
+                      width: "800px",
+                      height: "800px",
+                      left: "-100px",
+                      top: "-100px",
+                    }}
+                  ></div>
+
+                  {/* Doctor SVG - Force Large Size */}
+                  <img
+                    src={DoctorSvg}
+                    alt="Friendly Doctor"
+                    className="relative z-10 drop-shadow-2xl transform hover:scale-105 transition-transform duration-500"
+                    style={{
+                      width: "600px",
+                      height: "auto",
+                      minWidth: "600px",
+                    }}
+                  />
+
+                  {/* Floating elements around doctor */}
+                  <div
+                    className="absolute text-5xl animate-pulse"
+                    style={{
+                      bottom: "120px",
+                      left: "80px",
+                      animationDuration: "2s",
+                      animationDelay: "1s",
+                    }}
+                  >
+                    ✨
+                  </div>
+                  <div
+                    className="absolute text-5xl animate-bounce"
+                    style={{
+                      top: "200px",
+                      left: "50px",
+                      animationDuration: "4s",
+                      animationDelay: "1.5s",
+                    }}
+                  >
+                    🌟
+                  </div>
+                  <div
+                    className="absolute text-4xl animate-pulse"
+                    style={{
+                      top: "300px",
+                      right: "50px",
+                      animationDuration: "3s",
+                      animationDelay: "2s",
+                    }}
+                  >
+                    🎨
+                  </div>
+                  <div
+                    className="absolute text-4xl animate-bounce"
+                    style={{
+                      bottom: "200px",
+                      right: "120px",
+                      animationDuration: "2.5s",
+                      animationDelay: "1.2s",
+                    }}
+                  >
+                    🌈
+                  </div>
+                  <div
+                    className="absolute text-3xl animate-pulse"
+                    style={{
+                      top: "150px",
+                      right: "200px",
+                      animationDuration: "3.5s",
+                      animationDelay: "0.8s",
+                    }}
+                  >
+                    🏥
+                  </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>

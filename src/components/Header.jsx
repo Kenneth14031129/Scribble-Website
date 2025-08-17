@@ -18,7 +18,6 @@ const Header = () => {
     { path: "/", label: "Home" },
     { path: "/about", label: "About" },
     { path: "/services", label: "Services" },
-    { path: "/contact", label: "Contact" },
   ];
 
   return (
@@ -36,9 +35,6 @@ const Header = () => {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl rotate-45 group-hover:rotate-[50deg] transition-transform duration-300"></div>
               <div className="absolute inset-0 w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl rotate-12 group-hover:rotate-[15deg] transition-transform duration-300 opacity-70"></div>
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
-              Scribble
-            </span>
           </Link>
 
           <div className="hidden md:flex items-center space-x-1">
@@ -65,11 +61,8 @@ const Header = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <button className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors duration-300">
-              Sign In
-            </button>
             <button className="group relative px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-              <span className="relative z-10">Get Started</span>
+              <span className="relative z-10">Contact Us</span>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           </div>
@@ -121,11 +114,8 @@ const Header = () => {
             );
           })}
           <div className="pt-4 border-t border-gray-200 space-y-3">
-            <button className="w-full px-4 py-3 text-base font-medium text-gray-700 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors duration-300">
-              Sign In
-            </button>
             <button className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-base font-medium rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300">
-              Get Started
+              Contact Us
             </button>
           </div>
         </div>
