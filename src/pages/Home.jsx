@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { ChevronDown } from "lucide-react";
 import SafeSvg from "../assets/Safe1.svg";
 import FunSvg from "../assets/Fun1.svg";
 import ExpertSvg from "../assets/Expert1.svg";
@@ -188,9 +189,12 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100">
-      {/* Floating Animation Styles + 3D Card Flip */}
-      <style jsx>{`
+    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 scroll-smooth">
+      {/* Floating Animation Styles + 3D Card Flip + Smooth Scroll */}
+      <style jsx global>{`
+        html {
+          scroll-behavior: smooth;
+        }
         @keyframes float {
           0%,
           100% {
@@ -311,14 +315,15 @@ const Home = () => {
                     : "opacity-0 translate-y-8"
                 }`}
               >
-                <Link
-                  to="/contact"
-                  className="group relative px-12 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-full hover:from-orange-600 hover:to-amber-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/25 text-lg"
+                <a
+                  href="#our-therapy"
+                  className="group relative px-12 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-full hover:from-orange-600 hover:to-amber-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/25 text-lg scroll-smooth"
                 >
                   <span className="relative z-10 flex items-center space-x-2">
-                    <span>Start Their Journey</span>
+                    <span>Learn More</span>
+                    <ChevronDown className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-1" />
                   </span>
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -420,6 +425,7 @@ const Home = () => {
 
       {/* Features Section - Why Kids Love Us */}
       <section
+        id="our-therapy"
         ref={featuresRef}
         className="py-32 bg-gradient-to-b from-orange-50 via-white to-amber-50 relative"
       >
@@ -722,16 +728,7 @@ const Home = () => {
               className="group relative px-12 py-5 bg-white text-orange-600 font-black rounded-full hover:bg-orange-100 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-white/25 text-xl border-4 border-orange-300"
             >
               <span className="relative z-10 flex items-center space-x-2">
-                <span>🎯 Book Free Session</span>
-              </span>
-            </Link>
-
-            <Link
-              to="/about"
-              className="group px-12 py-5 border-4 border-white text-white font-bold rounded-full hover:bg-white/20 transition-all duration-300 transform hover:scale-105 text-xl"
-            >
-              <span className="flex items-center space-x-2">
-                <span>💫 Learn More</span>
+                <span>Book Free Session</span>
               </span>
             </Link>
           </div>

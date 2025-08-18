@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Phone, Mail, MapPin, Heart } from "lucide-react";
 import HandsSvg from "../assets/Hands1.svg";
 
 const Footer = () => {
@@ -21,16 +22,10 @@ const Footer = () => {
   ];
 
   const footerLinks = {
-    services: [
-      { name: "Play Therapy", href: "/services" },
-      { name: "Family Counseling", href: "/services" },
-      { name: "Group Sessions", href: "/services" },
-      { name: "Assessment", href: "/services" },
-    ],
     company: [
+      { name: "Home", href: "/" },
       { name: "About Us", href: "/about" },
-      { name: "Our Team", href: "/about" },
-      { name: "Careers", href: "#" },
+      { name: "Services", href: "/services" },
       { name: "Contact", href: "/contact" },
     ],
   };
@@ -90,26 +85,6 @@ const Footer = () => {
             {/* Navigation Links */}
             <div className="lg:col-span-8">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
-                {/* Services */}
-                <div>
-                  <h3 className="text-orange-900 font-bold text-sm uppercase tracking-wider mb-6 relative flex items-center space-x-2">
-                    <span>🎨 Our Services</span>
-                    <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full"></div>
-                  </h3>
-                  <ul className="space-y-4">
-                    {footerLinks.services.map((link) => (
-                      <li key={link.name}>
-                        <Link
-                          to={link.href}
-                          className="text-orange-700 hover:text-orange-900 transition-colors duration-300 text-sm flex items-center space-x-2 group"
-                        >
-                          <span>{link.name}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
                 {/* Company */}
                 <div>
                   <h3 className="text-orange-900 font-bold text-sm uppercase tracking-wider mb-6 relative flex items-center space-x-2">
@@ -128,6 +103,57 @@ const Footer = () => {
                       </li>
                     ))}
                   </ul>
+                </div>
+
+                {/* Contact Information */}
+                <div>
+                  <h3 className="text-orange-900 font-bold text-sm uppercase tracking-wider mb-6 relative flex items-center space-x-2">
+                    <span>📞 Contact Info</span>
+                    <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full"></div>
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <Phone className="w-4 h-4 text-orange-600" />
+                      </div>
+                      <div>
+                        <p className="text-orange-900 font-medium text-sm">
+                          (555) 123-4567
+                        </p>
+                        <p className="text-orange-600 text-xs">
+                          Mon-Fri 8AM-6PM
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <Mail className="w-4 h-4 text-orange-600" />
+                      </div>
+                      <div>
+                        <p className="text-orange-900 font-medium text-sm">
+                          hello@scribbletherapy.com
+                        </p>
+                        <p className="text-orange-600 text-xs">
+                          We reply within 24hrs
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3">
+                      <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center mt-0.5">
+                        <MapPin className="w-4 h-4 text-orange-600" />
+                      </div>
+                      <div>
+                        <p className="text-orange-900 font-medium text-sm">
+                          123 Therapy Lane
+                        </p>
+                        <p className="text-orange-600 text-xs">
+                          Wellness City, WC 12345
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Hands SVG Section */}
@@ -154,7 +180,7 @@ const Footer = () => {
                 <div className="h-4 w-px bg-orange-300/30"></div>
                 <p className="text-orange-600 text-xs flex items-center space-x-1">
                   <span>Made with</span>
-                  <span className="text-red-400 animate-pulse">💙</span>
+                  <Heart className="w-4 h-4 fill-orange-500 text-orange-500" />
                   <span>for families</span>
                 </p>
               </div>

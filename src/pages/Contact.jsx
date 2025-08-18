@@ -10,6 +10,7 @@ import {
   Calendar,
   Heart,
   Smile,
+  ChevronDown,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -281,8 +282,11 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100">
-      {/* Floating Animation Styles */}
-      <style jsx>{`
+      {/* Floating Animation Styles + Smooth Scroll */}
+      <style jsx global>{`
+        html {
+          scroll-behavior: smooth;
+        }
         @keyframes float {
           0%,
           100% {
@@ -397,6 +401,7 @@ const Contact = () => {
               >
                 <span className="relative z-10 flex items-center space-x-2">
                   <span>Start Conversation</span>
+                  <ChevronDown className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-1" />
                 </span>
               </a>
             </div>

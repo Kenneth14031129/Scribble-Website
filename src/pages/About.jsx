@@ -2,13 +2,12 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Star, Users, Target, Sparkles } from "lucide-react";
+import { Star, Users, Target, Sparkles, ChevronDown } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 import Aboutsvg from "../assets/About.svg";
 import Mesvg from "../assets/Me.svg";
 
-// Timeline Progress Component with Scroll-based Animation
 const TimelineProgress = ({ timelineEvents }) => {
   const timelineRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -566,8 +565,11 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100">
-      {/* Floating Animation Styles */}
-      <style jsx>{`
+      {/* Floating Animation Styles + Smooth Scroll */}
+      <style jsx global>{`
+        html {
+          scroll-behavior: smooth;
+        }
         @keyframes float {
           0%,
           100% {
@@ -678,14 +680,15 @@ const About = () => {
                     : "opacity-0 translate-y-8"
                 }`}
               >
-                <Link
-                  to="/contact"
+                <a
+                  href="#meet-our-team"
                   className="group relative px-12 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-full hover:from-orange-600 hover:to-amber-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/25 text-lg"
                 >
                   <span className="relative z-10 flex items-center space-x-2">
                     <span>Meet Our Team</span>
+                    <ChevronDown className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-1" />
                   </span>
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -835,7 +838,7 @@ const About = () => {
       </section>
 
       {/* Meet Our Team Carousel */}
-      <section className="pt-32 pb-16 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative overflow-hidden">
+      <section id="meet-our-team" className="pt-32 pb-16 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

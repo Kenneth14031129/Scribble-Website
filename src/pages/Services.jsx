@@ -9,6 +9,7 @@ import {
   Palette,
   Music,
   MessageCircle,
+  ChevronDown,
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -302,8 +303,11 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100">
-      {/* Floating Animation Styles */}
-      <style jsx>{`
+      {/* Floating Animation Styles + Smooth Scroll */}
+      <style jsx global>{`
+        html {
+          scroll-behavior: smooth;
+        }
         @keyframes float {
           0%,
           100% {
@@ -413,30 +417,22 @@ const Services = () => {
                   : "opacity-0 translate-y-8"
               }`}
             >
-              <Link
-                to="/contact"
+              <a
+                href="#core-therapy-services"
                 className="group relative px-12 py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-full hover:from-orange-600 hover:to-amber-600 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/25 text-lg"
               >
                 <span className="relative z-10 flex items-center space-x-2">
-                  <span>Schedule Consultation</span>
+                  <span>Learn More</span>
+                  <ChevronDown className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-1" />
                 </span>
-              </Link>
-
-              <Link
-                to="/about"
-                className="group relative px-12 py-4 bg-white/90 backdrop-blur-sm text-orange-600 font-bold rounded-full border-2 border-orange-300 hover:bg-orange-50 transition-all duration-300 transform hover:scale-105 hover:shadow-xl text-lg"
-              >
-                <span className="relative z-10 flex items-center space-x-2">
-                  <span>Learn About Us</span>
-                </span>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       {/* Core Services Section */}
-      <section className="py-32 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative overflow-hidden">
+      <section id="core-therapy-services" className="py-32 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -459,9 +455,13 @@ const Services = () => {
                 target: timelineRef,
                 offset: ["start center", "end center"],
               });
-              
-              const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-              
+
+              const lineHeight = useTransform(
+                scrollYProgress,
+                [0, 1],
+                ["0%", "100%"]
+              );
+
               return (
                 <>
                   {/* Central Timeline Line Background */}
@@ -483,111 +483,43 @@ const Services = () => {
             })()}
 
             <div className="space-y-16 relative z-10">
-            {coreServices.map((service, index) => {
-              const IconComponent = service.icon;
-              const isEven = index % 2 === 0;
-              
-              return (
-                <div key={service.title} className="flex">
-                  {/* Left side service */}
-                  {isEven && (
-                    <motion.div
-                      initial={{ 
-                        opacity: 0, 
-                        x: -100,
-                        scale: 0.8
-                      }}
-                      whileInView={{ 
-                        opacity: 1, 
-                        x: 0,
-                        scale: 1
-                      }}
-                      transition={{ 
-                        duration: 0.8, 
-                        delay: index * 0.15,
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 15
-                      }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      className="w-1/2 text-center lg:text-left group pr-8"
-                    >
-                      {/* Content Section */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: index * 0.15 + 0.2 }}
-                        viewport={{ once: true }}
-                      >
-                        <h3 className="text-3xl lg:text-4xl font-bold text-orange-900 mb-6 group-hover:text-orange-700 transition-colors duration-300">
-                          {service.title}
-                        </h3>
-                        <p className="text-lg text-orange-800 leading-relaxed mb-8">
-                          {service.description}
-                        </p>
-                      </motion.div>
+              {coreServices.map((service, index) => {
+                const IconComponent = service.icon;
+                const isEven = index % 2 === 0;
 
-                      {/* Features List */}
+                return (
+                  <div key={service.title} className="flex">
+                    {/* Left side service */}
+                    {isEven && (
                       <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.8, delay: index * 0.15 + 0.4 }}
-                        viewport={{ once: true }}
-                        className="space-y-3"
-                      >
-                        {service.features.map((feature, idx) => (
-                          <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ 
-                              duration: 0.5, 
-                              delay: index * 0.15 + 0.5 + (idx * 0.1) 
-                            }}
-                            viewport={{ once: true }}
-                            className="flex items-center justify-start text-orange-800 group-hover:text-orange-700 transition-colors duration-300"
-                          >
-                            <motion.div
-                              whileHover={{ scale: 1.5 }}
-                              className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.color} mr-3 flex-shrink-0`}
-                            ></motion.div>
-                            <span className="font-medium">{feature}</span>
-                          </motion.div>
-                        ))}
-                      </motion.div>
-                    </motion.div>
-                  )}
-
-                  {/* Right side service */}
-                  {!isEven && (
-                    <>
-                      <div className="w-1/2"></div>
-                      <motion.div
-                        initial={{ 
-                          opacity: 0, 
-                          x: 100,
-                          scale: 0.8
+                        initial={{
+                          opacity: 0,
+                          x: -100,
+                          scale: 0.8,
                         }}
-                        whileInView={{ 
-                          opacity: 1, 
+                        whileInView={{
+                          opacity: 1,
                           x: 0,
-                          scale: 1
+                          scale: 1,
                         }}
-                        transition={{ 
-                          duration: 0.8, 
+                        transition={{
+                          duration: 0.8,
                           delay: index * 0.15,
                           type: "spring",
                           stiffness: 100,
-                          damping: 15
+                          damping: 15,
                         }}
                         viewport={{ once: true, margin: "-50px" }}
-                        className="w-1/2 text-center lg:text-left group pl-8"
+                        className="w-1/2 text-center lg:text-left group pr-8"
                       >
                         {/* Content Section */}
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.6, delay: index * 0.15 + 0.2 }}
+                          transition={{
+                            duration: 0.6,
+                            delay: index * 0.15 + 0.2,
+                          }}
                           viewport={{ once: true }}
                         >
                           <h3 className="text-3xl lg:text-4xl font-bold text-orange-900 mb-6 group-hover:text-orange-700 transition-colors duration-300">
@@ -602,7 +534,10 @@ const Services = () => {
                         <motion.div
                           initial={{ opacity: 0 }}
                           whileInView={{ opacity: 1 }}
-                          transition={{ duration: 0.8, delay: index * 0.15 + 0.4 }}
+                          transition={{
+                            duration: 0.8,
+                            delay: index * 0.15 + 0.4,
+                          }}
                           viewport={{ once: true }}
                           className="space-y-3"
                         >
@@ -611,9 +546,9 @@ const Services = () => {
                               key={idx}
                               initial={{ opacity: 0, y: 10 }}
                               whileInView={{ opacity: 1, y: 0 }}
-                              transition={{ 
-                                duration: 0.5, 
-                                delay: index * 0.15 + 0.5 + (idx * 0.1) 
+                              transition={{
+                                duration: 0.5,
+                                delay: index * 0.15 + 0.5 + idx * 0.1,
                               }}
                               viewport={{ once: true }}
                               className="flex items-center justify-start text-orange-800 group-hover:text-orange-700 transition-colors duration-300"
@@ -627,11 +562,88 @@ const Services = () => {
                           ))}
                         </motion.div>
                       </motion.div>
-                    </>
-                  )}
-                </div>
-              );
-            })}
+                    )}
+
+                    {/* Right side service */}
+                    {!isEven && (
+                      <>
+                        <div className="w-1/2"></div>
+                        <motion.div
+                          initial={{
+                            opacity: 0,
+                            x: 100,
+                            scale: 0.8,
+                          }}
+                          whileInView={{
+                            opacity: 1,
+                            x: 0,
+                            scale: 1,
+                          }}
+                          transition={{
+                            duration: 0.8,
+                            delay: index * 0.15,
+                            type: "spring",
+                            stiffness: 100,
+                            damping: 15,
+                          }}
+                          viewport={{ once: true, margin: "-50px" }}
+                          className="w-1/2 text-center lg:text-left group pl-8"
+                        >
+                          {/* Content Section */}
+                          <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{
+                              duration: 0.6,
+                              delay: index * 0.15 + 0.2,
+                            }}
+                            viewport={{ once: true }}
+                          >
+                            <h3 className="text-3xl lg:text-4xl font-bold text-orange-900 mb-6 group-hover:text-orange-700 transition-colors duration-300">
+                              {service.title}
+                            </h3>
+                            <p className="text-lg text-orange-800 leading-relaxed mb-8">
+                              {service.description}
+                            </p>
+                          </motion.div>
+
+                          {/* Features List */}
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            transition={{
+                              duration: 0.8,
+                              delay: index * 0.15 + 0.4,
+                            }}
+                            viewport={{ once: true }}
+                            className="space-y-3"
+                          >
+                            {service.features.map((feature, idx) => (
+                              <motion.div
+                                key={idx}
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{
+                                  duration: 0.5,
+                                  delay: index * 0.15 + 0.5 + idx * 0.1,
+                                }}
+                                viewport={{ once: true }}
+                                className="flex items-center justify-start text-orange-800 group-hover:text-orange-700 transition-colors duration-300"
+                              >
+                                <motion.div
+                                  whileHover={{ scale: 1.5 }}
+                                  className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.color} mr-3 flex-shrink-0`}
+                                ></motion.div>
+                                <span className="font-medium">{feature}</span>
+                              </motion.div>
+                            ))}
+                          </motion.div>
+                        </motion.div>
+                      </>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
