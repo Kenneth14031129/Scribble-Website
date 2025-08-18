@@ -19,23 +19,23 @@ const TimelineProgress = ({ timelineEvents }) => {
 
   return (
     <div ref={timelineRef} className="relative">
-      {/* Central Timeline Line Background */}
-      <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-orange-200 via-amber-200 to-yellow-200 rounded-full opacity-30" />
+      {/* Central Timeline Line Background - Hidden on mobile */}
+      <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-orange-200 via-amber-200 to-yellow-200 rounded-full opacity-30 hidden sm:block" />
 
-      {/* Animated Central Timeline Line */}
+      {/* Animated Central Timeline Line - Hidden on mobile */}
       <motion.div
-        className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-orange-500 via-amber-500 to-yellow-500 rounded-full origin-top"
+        className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-orange-500 via-amber-500 to-yellow-500 rounded-full origin-top hidden sm:block"
         style={{ height: lineHeight }}
       />
 
-      {/* Glowing Effect */}
+      {/* Glowing Effect - Hidden on mobile */}
       <motion.div
-        className="absolute left-1/2 transform -translate-x-1/2 w-2 bg-gradient-to-b from-orange-400 via-amber-400 to-yellow-400 rounded-full blur-sm origin-top opacity-60"
+        className="absolute left-1/2 transform -translate-x-1/2 w-2 bg-gradient-to-b from-orange-400 via-amber-400 to-yellow-400 rounded-full blur-sm origin-top opacity-60 hidden sm:block"
         style={{ height: lineHeight }}
       />
 
       {/* Timeline Events */}
-      <div className="space-y-24 relative z-10">
+      <div className="space-y-16 sm:space-y-20 lg:space-y-24 relative z-10">
         {timelineEvents.map((event, index) => {
           const isLeft = index % 2 === 0;
           const eventProgress = (index + 1) / timelineEvents.length;
@@ -61,22 +61,22 @@ const TimelineProgress = ({ timelineEvents }) => {
                 isLeft ? "justify-start" : "justify-end"
               }`}
             >
-              {/* Timeline Node with Scroll Animation */}
+              {/* Timeline Node with Scroll Animation - Hidden on mobile */}
               <motion.div
                 style={{ opacity: nodeOpacity, scale: nodeScale }}
-                className="absolute left-1/2 transform -translate-x-1/2 z-20"
+                className="absolute left-1/2 transform -translate-x-1/2 z-20 hidden sm:block"
               >
                 <motion.div
                   whileHover={{ scale: 1.2 }}
                   transition={{ duration: 0.3 }}
-                  className={`w-16 h-16 bg-gradient-to-r ${event.color} rounded-full flex items-center justify-center border-4 border-white shadow-xl`}
+                  className={`w-14 h-14 lg:w-16 lg:h-16 bg-gradient-to-r ${event.color} rounded-full flex items-center justify-center border-3 lg:border-4 border-white shadow-xl`}
                 >
-                  <span className="text-2xl">{event.icon}</span>
+                  <span className="text-xl lg:text-2xl">{event.icon}</span>
                 </motion.div>
 
                 {/* Pulsing Ring Effect */}
                 <motion.div
-                  className={`absolute inset-0 bg-gradient-to-r ${event.color} rounded-full border-4 border-white opacity-30`}
+                  className={`absolute inset-0 bg-gradient-to-r ${event.color} rounded-full border-3 lg:border-4 border-white opacity-30`}
                   animate={{ scale: [1, 1.3, 1] }}
                   transition={{
                     duration: 2,
@@ -90,23 +90,27 @@ const TimelineProgress = ({ timelineEvents }) => {
               <motion.div
                 whileHover={{ scale: 1.02, y: -5 }}
                 transition={{ duration: 0.2 }}
-                className={`w-full lg:w-5/12 ${isLeft ? "pr-16" : "pl-16"}`}
+                className={`w-full sm:w-5/12 lg:w-5/12 ${
+                  isLeft ? "sm:pr-16 lg:pr-16" : "sm:pl-16 lg:pl-16"
+                }`}
               >
-                <div className="bg-white rounded-3xl p-8 shadow-xl border-2 border-orange-100 hover:shadow-2xl transition-all duration-300 backdrop-blur-sm">
-                  <div className={`${isLeft ? "text-left" : "text-right"}`}>
+                <div className="bg-white rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border-2 border-orange-100 hover:shadow-2xl transition-all duration-300 backdrop-blur-sm">
+                  <div className={`${
+                    isLeft ? "lg:text-left text-center" : "lg:text-right text-center"
+                  }`}>
                     <motion.div
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       transition={{ duration: 0.6, delay: index * 0.1 + 0.3 }}
                       viewport={{ once: true }}
-                      className={`inline-block px-4 py-2 bg-gradient-to-r ${event.color} text-white rounded-full text-lg font-bold mb-4 shadow-lg`}
+                      className={`inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r ${event.color} text-white rounded-full text-sm sm:text-base lg:text-lg font-bold mb-3 sm:mb-4 shadow-lg`}
                     >
                       {event.year}
                     </motion.div>
-                    <h3 className="text-2xl font-bold text-orange-900 mb-4">
+                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-orange-900 mb-2 sm:mb-3 lg:mb-4">
                       {event.title}
                     </h3>
-                    <p className="text-orange-700 leading-relaxed">
+                    <p className="text-sm sm:text-base text-orange-700 leading-relaxed">
                       {event.description}
                     </p>
                   </div>
@@ -154,46 +158,49 @@ const TeamCarousel = ({ team }) => {
   };
 
   const getCardVariants = (position) => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const isTablet = typeof window !== 'undefined' && window.innerWidth < 1024;
+    
     switch (position) {
       case "center":
         return {
           x: 0,
-          scale: 1,
+          scale: isMobile ? 0.9 : isTablet ? 0.95 : 1,
           zIndex: 5,
           opacity: 1,
           rotateY: 0,
         };
       case "left1":
         return {
-          x: -180,
-          scale: 0.85,
+          x: isMobile ? -120 : isTablet ? -150 : -180,
+          scale: isMobile ? 0.65 : isTablet ? 0.75 : 0.85,
           zIndex: 4,
-          opacity: 0.8,
-          rotateY: 20,
+          opacity: isMobile ? 0.6 : 0.8,
+          rotateY: isMobile ? 15 : 20,
         };
       case "left2":
         return {
-          x: -340,
-          scale: 0.7,
+          x: isMobile ? -200 : isTablet ? -270 : -340,
+          scale: isMobile ? 0.5 : isTablet ? 0.6 : 0.7,
           zIndex: 3,
-          opacity: 0.6,
-          rotateY: 35,
+          opacity: isMobile ? 0.4 : 0.6,
+          rotateY: isMobile ? 25 : 35,
         };
       case "right1":
         return {
-          x: 180,
-          scale: 0.85,
+          x: isMobile ? 120 : isTablet ? 150 : 180,
+          scale: isMobile ? 0.65 : isTablet ? 0.75 : 0.85,
           zIndex: 4,
-          opacity: 0.8,
-          rotateY: -20,
+          opacity: isMobile ? 0.6 : 0.8,
+          rotateY: isMobile ? -15 : -20,
         };
       case "right2":
         return {
-          x: 340,
-          scale: 0.7,
+          x: isMobile ? 200 : isTablet ? 270 : 340,
+          scale: isMobile ? 0.5 : isTablet ? 0.6 : 0.7,
           zIndex: 3,
-          opacity: 0.6,
-          rotateY: -35,
+          opacity: isMobile ? 0.4 : 0.6,
+          rotateY: isMobile ? -25 : -35,
         };
       case "hidden":
         return {
@@ -215,9 +222,9 @@ const TeamCarousel = ({ team }) => {
   };
 
   return (
-    <div className="relative w-full max-w-7xl mx-auto">
+    <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
       {/* Multi-Card Display */}
-      <div className="relative h-[600px] flex items-start justify-center overflow-hidden pt-16">
+      <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] flex items-start justify-center overflow-hidden pt-8 sm:pt-12 lg:pt-16">
         {team.map((member, index) => {
           const position = getCardPosition(index);
           const isSelected = index === currentIndex;
@@ -226,7 +233,7 @@ const TeamCarousel = ({ team }) => {
           return (
             <motion.div
               key={member.name}
-              className="absolute w-80 cursor-pointer"
+              className="absolute w-64 sm:w-72 lg:w-80 cursor-pointer"
               animate={variants}
               transition={{
                 duration: 0.6,
@@ -246,7 +253,7 @@ const TeamCarousel = ({ team }) => {
                 }`}
               >
                 {/* Image Section */}
-                <div className="relative overflow-hidden h-96">
+                <div className="relative overflow-hidden h-64 sm:h-80 lg:h-96">
                   <motion.img
                     src={member.image}
                     alt={member.name}
@@ -270,16 +277,16 @@ const TeamCarousel = ({ team }) => {
               {/* Name and Position - Only for Selected Card */}
               {isSelected && (
                 <motion.div
-                  className="mt-4 text-center"
+                  className="mt-2 sm:mt-3 lg:mt-4 text-center px-2"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
                 >
-                  <h3 className="text-lg font-bold mb-1 text-orange-900">
+                  <h3 className="text-base sm:text-lg font-bold mb-1 text-orange-900">
                     {member.name}
                   </h3>
-                  <p className="text-sm font-medium text-orange-600">
+                  <p className="text-xs sm:text-sm font-medium text-orange-600">
                     {member.role}
                   </p>
                 </motion.div>
@@ -289,16 +296,16 @@ const TeamCarousel = ({ team }) => {
         })}
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="absolute top-1/2 -translate-y-1/2 -left-16 z-20">
+      {/* Navigation Buttons - Responsive positioning */}
+      <div className="absolute top-1/2 -translate-y-1/2 left-2 sm:left-4 lg:-left-16 z-20">
         <motion.button
           whileHover={{ scale: 1.1, backgroundColor: "rgb(249 115 22)" }}
           whileTap={{ scale: 0.95 }}
           onClick={() => paginate(-1)}
-          className="w-12 h-12 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg flex items-center justify-center transition-colors duration-200"
+          className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg flex items-center justify-center transition-colors duration-200"
         >
           <svg
-            className="w-6 h-6"
+            className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -313,15 +320,15 @@ const TeamCarousel = ({ team }) => {
         </motion.button>
       </div>
 
-      <div className="absolute top-1/2 -translate-y-1/2 -right-16 z-20">
+      <div className="absolute top-1/2 -translate-y-1/2 right-2 sm:right-4 lg:-right-16 z-20">
         <motion.button
           whileHover={{ scale: 1.1, backgroundColor: "rgb(249 115 22)" }}
           whileTap={{ scale: 0.95 }}
           onClick={() => paginate(1)}
-          className="w-12 h-12 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg flex items-center justify-center transition-colors duration-200"
+          className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg flex items-center justify-center transition-colors duration-200"
         >
           <svg
-            className="w-6 h-6"
+            className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -623,15 +630,15 @@ const About = () => {
           {/* Kid-Friendly Floating Shapes */}
           {floatingElements.map(renderFloatingShape)}
 
-          {/* Decorative elements */}
+          {/* Decorative elements - Responsive */}
           <div
-            className="absolute top-20 left-16 text-4xl animate-wave"
+            className="absolute top-10 sm:top-20 left-4 sm:left-16 text-2xl sm:text-3xl lg:text-4xl animate-wave"
             style={{ animationDuration: "2s" }}
           >
             🌈
           </div>
           <div
-            className="absolute bottom-32 right-20 text-5xl animate-pulse"
+            className="absolute bottom-16 sm:bottom-32 right-4 sm:right-20 text-3xl sm:text-4xl lg:text-5xl animate-pulse"
             style={{ animationDuration: "3s" }}
           >
             ✨
@@ -692,8 +699,8 @@ const About = () => {
               </div>
             </div>
 
-            {/* Right side: Hands SVG */}
-            <div className="relative flex items-center justify-center lg:justify-end">
+            {/* Right side: Hands SVG - Hidden on mobile, responsive on larger screens */}
+            <div className="relative hidden lg:flex items-center justify-center lg:justify-end">
               <div
                 className={`transition-all duration-1000 delay-600 ${
                   isVisible
@@ -705,10 +712,10 @@ const About = () => {
                   <div
                     className="absolute inset-0 bg-gradient-to-br from-orange-200/30 via-amber-100/20 to-yellow-200/30 rounded-full blur-3xl animate-pulse"
                     style={{
-                      width: "700px",
-                      height: "700px",
-                      left: "-50px",
-                      top: "-50px",
+                      width: "min(700px, 90vw)",
+                      height: "min(700px, 90vw)",
+                      left: "min(-50px, -5vw)",
+                      top: "min(-50px, -5vw)",
                     }}
                   ></div>
 
@@ -720,6 +727,7 @@ const About = () => {
                       width: "500px",
                       height: "auto",
                       minWidth: "500px",
+                      maxWidth: "500px",
                     }}
                   />
                 </div>
@@ -735,7 +743,7 @@ const About = () => {
         className="py-32 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative overflow-hidden"
       >
         <div
-          className="absolute top-16 right-16 text-5xl animate-spin"
+          className="absolute top-8 sm:top-16 right-4 sm:right-16 text-3xl sm:text-4xl lg:text-5xl animate-spin"
           style={{ animationDuration: "12s" }}
         >
           🌸
@@ -786,44 +794,44 @@ const About = () => {
       <section className="py-32 bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-400 relative overflow-hidden">
         {/* Background decorations */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-20 w-32 h-32 bg-white rounded-full blur-2xl animate-pulse"></div>
+          <div className="absolute top-10 sm:top-20 left-4 sm:left-20 w-20 sm:w-32 h-20 sm:h-32 bg-white rounded-full blur-2xl animate-pulse"></div>
           <div
-            className="absolute bottom-32 right-32 w-40 h-40 bg-orange-200 rounded-full blur-3xl animate-pulse"
+            className="absolute bottom-16 sm:bottom-32 right-4 sm:right-32 w-24 sm:w-40 h-24 sm:h-40 bg-orange-200 rounded-full blur-3xl animate-pulse"
             style={{ animationDelay: "1s" }}
           ></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <div className="text-center mb-12 sm:mb-16 lg:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
               Our Values
             </h2>
-            <p className="text-xl text-orange-100 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-orange-100 max-w-3xl mx-auto leading-relaxed px-4">
               The principles that guide every interaction, every session, and
               every smile we nurture 💛
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {values.map((value, index) => {
               const IconComponent = value.icon;
               return (
                 <div
                   key={value.title}
-                  className="group bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-white/50"
+                  className="group bg-white/95 backdrop-blur-sm rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-white/50"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <div className="text-center space-y-4">
+                  <div className="text-center space-y-3 sm:space-y-4">
                     <div className="flex justify-center">
                       <IconComponent
-                        size={48}
+                        size={window.innerWidth < 640 ? 36 : window.innerWidth < 1024 ? 42 : 48}
                         className="text-orange-500 group-hover:text-orange-600 transition-colors duration-300"
                       />
                     </div>
-                    <h3 className="text-xl font-bold text-orange-900">
+                    <h3 className="text-lg sm:text-xl font-bold text-orange-900">
                       {value.title}
                     </h3>
-                    <p className="text-orange-700 leading-relaxed">
+                    <p className="text-sm sm:text-base text-orange-700 leading-relaxed">
                       {value.description}
                     </p>
                     <div

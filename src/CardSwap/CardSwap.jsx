@@ -10,13 +10,19 @@ import React, {
 import gsap from "gsap";
 
 export const Card = forwardRef(
-  ({ customClass, ...rest }, ref) => (
-    <div
-      ref={ref}
-      {...rest}
-      className={`absolute top-1/2 left-1/2 rounded-xl border border-white bg-black [transform-style:preserve-3d] [will-change:transform] [backface-visibility:hidden] ${customClass ?? ""} ${rest.className ?? ""}`.trim()}
-    />
-  )
+  ({ customClass, responsive = true, ...rest }, ref) => {
+    const responsiveClasses = responsive 
+      ? "rounded-lg sm:rounded-xl border border-white/80 sm:border-white text-sm sm:text-base" 
+      : "rounded-xl border border-white";
+    
+    return (
+      <div
+        ref={ref}
+        {...rest}
+        className={`absolute top-1/2 left-1/2 bg-black [transform-style:preserve-3d] [will-change:transform] [backface-visibility:hidden] ${responsiveClasses} ${customClass ?? ""} ${rest.className ?? ""}`.trim()}
+      />
+    );
+  }
 );
 Card.displayName = "Card";
 
@@ -56,6 +62,7 @@ const CardSwap = ({
   skewAmount = 6,
   easing = "elastic",
   children,
+  responsive = true,
 }) => {
   const config =
     easing === "elastic"
@@ -95,11 +102,38 @@ const CardSwap = ({
   const container = useRef(null);
 
   useEffect(() => {
+    const getResponsiveDistances = () => {
+      if (!responsive) return { cardDistance, verticalDistance };
+      
+      const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
+      
+      if (screenWidth < 480) {
+        return {
+          cardDistance: cardDistance * 0.8,
+          verticalDistance: verticalDistance * 0.8
+        };
+      } else if (screenWidth < 768) {
+        return {
+          cardDistance: cardDistance * 0.9,
+          verticalDistance: verticalDistance * 0.9
+        };
+      } else if (screenWidth < 1024) {
+        return {
+          cardDistance: cardDistance * 0.9,
+          verticalDistance: verticalDistance * 0.9
+        };
+      }
+      
+      return { cardDistance, verticalDistance };
+    };
+
+    const { cardDistance: respCardDistance, verticalDistance: respVerticalDistance } = getResponsiveDistances();
+    
     const total = refs.length;
     refs.forEach((r, i) =>
       placeNow(
         r.current,
-        makeSlot(i, cardDistance, verticalDistance, total),
+        makeSlot(i, respCardDistance, respVerticalDistance, total),
         skewAmount
       )
     );
@@ -121,7 +155,7 @@ const CardSwap = ({
       tl.addLabel("promote", `-=${config.durDrop * config.promoteOverlap}`);
       rest.forEach((idx, i) => {
         const el = refs[idx].current;
-        const slot = makeSlot(i, cardDistance, verticalDistance, refs.length);
+        const slot = makeSlot(i, respCardDistance, respVerticalDistance, refs.length);
         tl.set(el, { zIndex: slot.zIndex }, "promote");
         tl.to(
           el,
@@ -138,8 +172,8 @@ const CardSwap = ({
 
       const backSlot = makeSlot(
         refs.length - 1,
-        cardDistance,
-        verticalDistance,
+        respCardDistance,
+        respVerticalDistance,
         refs.length
       );
       tl.addLabel("return", `promote+=${config.durMove * config.returnDelay}`);
@@ -189,14 +223,45 @@ const CardSwap = ({
     }
     return () => clearInterval(intervalRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing]);
+  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing, responsive]);
+
+  const getResponsiveDimensions = () => {
+    if (!responsive) return { width, height };
+    
+    const screenWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
+    
+    if (screenWidth < 480) {
+      return {
+        width: Math.min(width * 0.9, screenWidth * 0.9),
+        height: Math.min(height * 0.9, screenWidth * 0.75)
+      };
+    } else if (screenWidth < 768) {
+      return {
+        width: Math.min(width * 0.95, screenWidth * 0.9),
+        height: Math.min(height * 0.95, screenWidth * 0.8)
+      };
+    } else if (screenWidth < 1024) {
+      return {
+        width: Math.min(width * 0.9, screenWidth * 0.6),
+        height: Math.min(height * 0.9, screenWidth * 0.5)
+      };
+    }
+    
+    return { width, height };
+  };
+
+  const responsiveDimensions = getResponsiveDimensions();
 
   const rendered = childArr.map((child, i) =>
     isValidElement(child)
       ? cloneElement(child, {
         key: i,
         ref: refs[i],
-        style: { width, height, ...(child.props.style ?? {}) },
+        style: { 
+          width: responsiveDimensions.width, 
+          height: responsiveDimensions.height, 
+          ...(child.props.style ?? {}) 
+        },
         onClick: (e) => {
           child.props.onClick?.(e);
           onCardClick?.(i);
@@ -204,11 +269,31 @@ const CardSwap = ({
       }) : child
   );
 
+  const getResponsiveClasses = () => {
+    if (!responsive) {
+      return "absolute bottom-0 right-0 transform translate-x-[5%] translate-y-[20%] origin-bottom-right perspective-[900px] overflow-visible";
+    }
+    
+    return `
+      absolute transform perspective-[900px] overflow-visible
+      bottom-0 right-0 translate-x-[5%] translate-y-[20%] origin-bottom-right
+      lg:bottom-0 lg:right-0 lg:translate-x-[5%] lg:translate-y-[20%] lg:scale-100 lg:origin-bottom-right
+      md:bottom-0 md:right-0 md:translate-x-[8%] md:translate-y-[18%] md:scale-[0.9] md:origin-bottom-right
+      max-md:top-1/2 max-md:left-1/2 max-md:-translate-x-1/2 max-md:-translate-y-1/2 max-md:scale-[1.1] max-md:origin-center
+      max-sm:top-1/2 max-sm:left-1/2 max-sm:-translate-x-1/2 max-sm:-translate-y-1/2 max-sm:scale-[1.0] max-sm:origin-center
+      max-[480px]:top-1/2 max-[480px]:left-1/2 max-[480px]:-translate-x-1/2 max-[480px]:-translate-y-1/2 max-[480px]:scale-[0.9] max-[480px]:origin-center
+      max-[320px]:top-1/2 max-[320px]:left-1/2 max-[320px]:-translate-x-1/2 max-[320px]:-translate-y-1/2 max-[320px]:scale-[0.8] max-[320px]:origin-center
+    `.replace(/\s+/g, ' ').trim();
+  };
+
   return (
     <div
       ref={container}
-      className="absolute bottom-0 right-0 transform translate-x-[5%] translate-y-[20%] origin-bottom-right perspective-[900px] overflow-visible max-[768px]:translate-x-[25%] max-[768px]:translate-y-[25%] max-[768px]:scale-[0.75] max-[480px]:translate-x-[25%] max-[480px]:translate-y-[25%] max-[480px]:scale-[0.55]"
-      style={{ width, height }}
+      className={getResponsiveClasses()}
+      style={{ 
+        width: responsiveDimensions.width, 
+        height: responsiveDimensions.height 
+      }}
     >
       {rendered}
     </div>

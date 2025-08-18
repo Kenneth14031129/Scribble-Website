@@ -409,56 +409,6 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Information Cards */}
-      <section className="py-20 bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-400">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              Contact Information
-            </h2>
-            <p className="text-xl text-orange-100 max-w-3xl mx-auto">
-              Multiple ways to reach our dedicated team 📞
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {contactInfo.map((info, index) => {
-              const IconComponent = info.icon;
-              return (
-                <motion.a
-                  key={info.title}
-                  href={info.action}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{
-                    scale: 1.05,
-                    rotateY: 5,
-                  }}
-                  className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 group"
-                >
-                  <div className="text-center">
-                    <div
-                      className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${info.color} text-white mb-4 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <IconComponent size={24} />
-                    </div>
-                    <h3 className="text-lg font-bold text-orange-900 mb-2">
-                      {info.title}
-                    </h3>
-                    <p className="text-orange-800 font-medium mb-1">
-                      {info.primary}
-                    </p>
-                    <p className="text-orange-600 text-sm">{info.secondary}</p>
-                  </div>
-                </motion.a>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
       {/* Advanced Contact Form */}
       <section
         id="contact-form"

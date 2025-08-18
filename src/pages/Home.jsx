@@ -12,6 +12,7 @@ const Home = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [setScrollY] = useState(0);
   const [floatingElements, setFloatingElements] = useState([]);
+  const [cardSwapDimensions, setCardSwapDimensions] = useState({ width: 420, height: 320, cardDistance: 40, verticalDistance: 50 });
   const heroRef = useRef(null);
   const featuresRef = useRef(null);
 
@@ -43,12 +44,27 @@ const Home = () => {
       setScrollY(window.scrollY);
     };
 
+    const updateCardSwapDimensions = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setCardSwapDimensions({ width: 280, height: 240, cardDistance: 20, verticalDistance: 30 });
+      } else if (width < 1024) {
+        setCardSwapDimensions({ width: 350, height: 280, cardDistance: 30, verticalDistance: 40 });
+      } else {
+        setCardSwapDimensions({ width: 420, height: 320, cardDistance: 40, verticalDistance: 50 });
+      }
+    };
+
+    updateCardSwapDimensions();
+
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", updateCardSwapDimensions);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", updateCardSwapDimensions);
     };
   }, []);
 
@@ -245,21 +261,21 @@ const Home = () => {
           {/* Kid-Friendly Floating Shapes */}
           {floatingElements.map(renderFloatingShape)}
 
-          {/* Additional decorative elements */}
+          {/* Additional decorative elements - Responsive */}
           <div
-            className="absolute top-1/4 left-10 text-4xl animate-pulse"
+            className="absolute top-1/4 left-4 sm:left-10 text-xl sm:text-2xl lg:text-4xl animate-pulse"
             style={{ animationDuration: "2s" }}
           >
             🌈
           </div>
           <div
-            className="absolute bottom-20 left-10 text-5xl animate-bounce"
+            className="absolute bottom-20 left-4 sm:left-10 text-2xl sm:text-3xl lg:text-5xl animate-bounce"
             style={{ animationDuration: "4s" }}
           >
             🎈
           </div>
           <div
-            className="absolute bottom-32 right-20 text-4xl animate-pulse"
+            className="absolute bottom-32 right-4 sm:right-20 text-xl sm:text-2xl lg:text-4xl animate-pulse"
             style={{ animationDuration: "2.5s" }}
           >
             ☁️
@@ -327,8 +343,8 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right side: Doctor SVG */}
-            <div className="relative flex items-center justify-center lg:justify-end overflow-visible">
+            {/* Right side: Doctor SVG - Hidden on mobile */}
+            <div className="relative hidden lg:flex items-center justify-center lg:justify-end overflow-visible">
               <div
                 className={`transition-all duration-1000 delay-600 ${
                   isVisible
@@ -337,14 +353,14 @@ const Home = () => {
                 }`}
               >
                 <div className="relative">
-                  {/* Decorative background circle */}
+                  {/* Decorative background circle - Responsive */}
                   <div
                     className="absolute inset-0 bg-gradient-to-br from-orange-200/30 via-amber-100/20 to-yellow-200/30 rounded-full blur-3xl animate-pulse"
                     style={{
-                      width: "800px",
-                      height: "800px",
-                      left: "-100px",
-                      top: "-100px",
+                      width: "min(800px, 90vw)",
+                      height: "min(800px, 90vw)",
+                      left: "min(-100px, -10vw)",
+                      top: "min(-100px, -10vw)",
                     }}
                   ></div>
 
@@ -360,12 +376,12 @@ const Home = () => {
                     }}
                   />
 
-                  {/* Floating elements around doctor */}
+                  {/* Floating elements around doctor - Responsive */}
                   <div
-                    className="absolute text-5xl animate-pulse"
+                    className="absolute text-3xl lg:text-5xl animate-pulse"
                     style={{
-                      bottom: "120px",
-                      left: "80px",
+                      bottom: "min(120px, 15%)",
+                      left: "min(80px, 10%)",
                       animationDuration: "2s",
                       animationDelay: "1s",
                     }}
@@ -373,10 +389,10 @@ const Home = () => {
                     ✨
                   </div>
                   <div
-                    className="absolute text-5xl animate-bounce"
+                    className="absolute text-3xl lg:text-5xl animate-bounce"
                     style={{
-                      top: "200px",
-                      left: "50px",
+                      top: "min(200px, 25%)",
+                      left: "min(50px, 8%)",
                       animationDuration: "4s",
                       animationDelay: "1.5s",
                     }}
@@ -384,10 +400,10 @@ const Home = () => {
                     🌟
                   </div>
                   <div
-                    className="absolute text-4xl animate-pulse"
+                    className="absolute text-2xl lg:text-4xl animate-pulse"
                     style={{
-                      top: "300px",
-                      right: "50px",
+                      top: "min(300px, 35%)",
+                      right: "min(50px, 8%)",
                       animationDuration: "3s",
                       animationDelay: "2s",
                     }}
@@ -395,10 +411,10 @@ const Home = () => {
                     🎨
                   </div>
                   <div
-                    className="absolute text-4xl animate-bounce"
+                    className="absolute text-2xl lg:text-4xl animate-bounce"
                     style={{
-                      bottom: "200px",
-                      right: "120px",
+                      bottom: "min(200px, 25%)",
+                      right: "min(120px, 15%)",
                       animationDuration: "2.5s",
                       animationDelay: "1.2s",
                     }}
@@ -406,10 +422,10 @@ const Home = () => {
                     🌈
                   </div>
                   <div
-                    className="absolute text-3xl animate-pulse"
+                    className="absolute text-xl lg:text-3xl animate-pulse"
                     style={{
-                      top: "150px",
-                      right: "200px",
+                      top: "min(150px, 20%)",
+                      right: "min(200px, 25%)",
                       animationDuration: "3.5s",
                       animationDelay: "0.8s",
                     }}
@@ -429,15 +445,15 @@ const Home = () => {
         ref={featuresRef}
         className="py-32 bg-gradient-to-b from-orange-50 via-white to-amber-50 relative"
       >
-        {/* Decorative elements */}
+        {/* Decorative elements - Responsive */}
         <div
-          className="absolute top-10 left-10 text-5xl animate-spin"
+          className="absolute top-10 left-4 sm:left-10 text-2xl sm:text-3xl lg:text-5xl animate-spin"
           style={{ animationDuration: "8s" }}
         >
           🌺
         </div>
         <div
-          className="absolute top-20 right-20 text-4xl animate-pulse"
+          className="absolute top-20 right-4 sm:right-20 text-xl sm:text-2xl lg:text-4xl animate-pulse"
           style={{ animationDuration: "3s" }}
         >
           ✨
@@ -454,7 +470,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
             {features.map((feature, index) => {
               // Define which SVG to use for each card
               const getSvgComponent = () => {
@@ -475,7 +491,7 @@ const Home = () => {
               return (
                 <div
                   key={feature.title}
-                  className="group relative h-80 w-full perspective-1000"
+                  className="group relative h-64 sm:h-72 lg:h-80 w-full perspective-1000"
                   style={{ animationDelay: `${index * 0.2}s` }}
                 >
                   {/* Card Container with 3D Flip */}
@@ -487,7 +503,7 @@ const Home = () => {
                         <img
                           src={SvgComponent}
                           alt={feature.title}
-                          className="w-full h-full object-contain max-w-[240px] max-h-[240px] filter drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-500"
+                          className="w-full h-full object-contain max-w-[160px] sm:max-w-[200px] lg:max-w-[240px] max-h-[160px] sm:max-h-[200px] lg:max-h-[240px] filter drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-500"
                         />
                       </div>
                     </div>
@@ -529,15 +545,15 @@ const Home = () => {
 
       {/* Parent Testimonials Section */}
       <section className="py-32 bg-gradient-to-br from-white via-orange-50 to-amber-50 relative">
-        {/* Decorative background elements */}
+        {/* Decorative background elements - Responsive */}
         <div
-          className="absolute top-16 right-16 text-5xl animate-bounce"
+          className="absolute top-16 right-4 sm:right-16 text-2xl sm:text-3xl lg:text-5xl animate-bounce"
           style={{ animationDuration: "3s" }}
         >
           💙
         </div>
         <div
-          className="absolute bottom-16 left-16 text-4xl animate-pulse"
+          className="absolute bottom-16 left-4 sm:left-16 text-xl sm:text-2xl lg:text-4xl animate-pulse"
           style={{ animationDuration: "2s" }}
         >
           🌟
@@ -595,14 +611,14 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Right side: CardSwap Container */}
-            <div className="relative w-full h-[400px] flex items-start justify-center">
-              {/* Desktop emoji */}
+            {/* Right side: CardSwap Container - Responsive */}
+            <div className="relative w-full h-[400px] sm:h-[450px] md:h-[350px] lg:h-[400px] flex items-center justify-center md:items-start md:justify-end">
+              {/* Responsive CardSwap */}
               <CardSwap
-                width={420}
-                height={320}
-                cardDistance={40}
-                verticalDistance={50}
+                width={cardSwapDimensions.width}
+                height={cardSwapDimensions.height}
+                cardDistance={cardSwapDimensions.cardDistance}
+                verticalDistance={cardSwapDimensions.verticalDistance}
                 delay={4000}
                 pauseOnHover={true}
                 skewAmount={4}
@@ -613,7 +629,7 @@ const Home = () => {
                     key={testimonial.name}
                     customClass="bg-gradient-to-br from-white via-orange-50 to-amber-50 border-2 border-orange-200/50 shadow-2xl backdrop-blur-xl"
                   >
-                    <div className="w-full h-full p-6 flex flex-col justify-between relative overflow-hidden">
+                    <div className="w-full h-full p-3 sm:p-4 lg:p-6 flex flex-col justify-between relative overflow-hidden">
                       {/* Floating decoration */}
                       <div className="absolute top-4 right-4 text-2xl opacity-60">
                         {index === 0 ? "🌟" : index === 1 ? "💫" : "✨"}
@@ -627,7 +643,7 @@ const Home = () => {
                       {/* Main content */}
                       <div className="relative z-10 flex-1 flex flex-col justify-center">
                         {/* Testimonial text */}
-                        <blockquote className="text-orange-900/90 font-medium leading-relaxed mb-4 italic text-center">
+                        <blockquote className="text-orange-900/90 font-medium leading-relaxed mb-2 sm:mb-4 italic text-center text-xs sm:text-sm lg:text-base">
                           "{testimonial.content}"
                         </blockquote>
 
@@ -639,7 +655,7 @@ const Home = () => {
                             className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-md"
                           />
                           <div className="text-center">
-                            <div className="font-bold text-orange-900 text-sm">
+                            <div className="font-bold text-orange-900 text-xs sm:text-sm">
                               {testimonial.name}
                             </div>
                             <div className="text-orange-600 text-xs font-medium">
@@ -686,38 +702,38 @@ const Home = () => {
           />
         </div>
 
-        {/* Floating fun elements */}
+        {/* Floating fun elements - Responsive */}
         <div
-          className="absolute top-10 left-10 text-6xl animate-bounce"
+          className="absolute top-10 left-4 sm:left-10 text-3xl sm:text-4xl lg:text-6xl animate-bounce"
           style={{ animationDuration: "3s" }}
         >
           🎈
         </div>
         <div
-          className="absolute top-20 right-20 text-5xl animate-spin"
+          className="absolute top-20 right-4 sm:right-20 text-2xl sm:text-3xl lg:text-5xl animate-spin"
           style={{ animationDuration: "6s" }}
         >
           🌟
         </div>
         <div
-          className="absolute bottom-20 right-10 text-5xl animate-bounce"
+          className="absolute bottom-20 right-4 sm:right-10 text-2xl sm:text-3xl lg:text-5xl animate-bounce"
           style={{ animationDuration: "4s" }}
         >
           🦋
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 sm:mb-8">
             Ready to Start Your
             <span className="block bg-gradient-to-r from-yellow-200 to-orange-200 bg-clip-text text-transparent">
               Child's Journey?
             </span>
           </h2>
 
-          <p className="text-xl md:text-2xl text-orange-100 mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl md:text-2xl text-orange-100 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-4">
             Book a free consultation and let's create a personalized therapy
             plan that your child will love!
-            <span className="text-white font-bold">
+            <span className="text-white font-bold block sm:inline mt-2 sm:mt-0">
               🌟 No pressure, just pure care! 🌟
             </span>
           </p>
@@ -725,7 +741,7 @@ const Home = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
             <Link
               to="/contact"
-              className="group relative px-12 py-5 bg-white text-orange-600 font-black rounded-full hover:bg-orange-100 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-white/25 text-xl border-4 border-orange-300"
+              className="group relative px-8 sm:px-12 py-4 sm:py-5 bg-white text-orange-600 font-black rounded-full hover:bg-orange-100 transition-all duration-300 transform hover:scale-110 hover:shadow-2xl hover:shadow-white/25 text-lg sm:text-xl border-2 sm:border-4 border-orange-300"
             >
               <span className="relative z-10 flex items-center space-x-2">
                 <span>Book Free Session</span>

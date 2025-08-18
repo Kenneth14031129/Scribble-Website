@@ -35,36 +35,36 @@ const Footer = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-16 lg:py-20">
           {/* Main Footer Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12">
             {/* Brand Section */}
             <div className="lg:col-span-4">
               <Link to="/" className="flex items-center space-x-3 group mb-8">
                 <div className="relative">
-                  <div className="w-12 h-12 bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-500 rounded-xl rotate-45 group-hover:rotate-[50deg] transition-transform duration-500 shadow-lg"></div>
-                  <div className="absolute inset-0 w-12 h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-xl rotate-12 group-hover:rotate-[15deg] transition-transform duration-500 opacity-70"></div>
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-600 via-amber-500 to-yellow-500 rounded-xl rotate-45 group-hover:rotate-[50deg] transition-transform duration-500 shadow-lg"></div>
+                  <div className="absolute inset-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-xl rotate-12 group-hover:rotate-[15deg] transition-transform duration-500 opacity-70"></div>
                 </div>
                 <div>
-                  <span className="block text-2xl font-black bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
+                  <span className="block text-xl sm:text-2xl font-black bg-gradient-to-r from-orange-600 via-amber-500 to-yellow-500 bg-clip-text text-transparent">
                     Scribble
                   </span>
-                  <span className="block text-sm text-orange-700 font-medium">
+                  <span className="block text-xs sm:text-sm text-orange-700 font-medium">
                     Therapy Center
                   </span>
                 </div>
               </Link>
 
-              <p className="text-orange-800 text-lg leading-relaxed mb-8 max-w-md">
+              <p className="text-orange-800 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8 max-w-md">
                 Where healing happens through play and every child feels safe to
                 grow. Professional therapy that kids actually love! 🌱
               </p>
 
-              {/* Enhanced Social Links */}
-              <div className="flex items-center space-x-3">
+              {/* Enhanced Social Links - Responsive */}
+              <div className="flex items-center space-x-2 sm:space-x-3">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
                     href={social.href}
-                    className="group relative p-3 rounded-2xl bg-orange-100/50 backdrop-blur-sm border border-orange-200/50 hover:bg-orange-200/60 hover:border-orange-300/60 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1"
+                    className="group relative p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-orange-100/50 backdrop-blur-sm border border-orange-200/50 hover:bg-orange-200/60 hover:border-orange-300/60 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1"
                     aria-label={social.name}
                   >
                     <div className="flex items-center space-x-2">
@@ -84,12 +84,12 @@ const Footer = () => {
 
             {/* Navigation Links */}
             <div className="lg:col-span-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
                 {/* Company */}
                 <div>
-                  <h3 className="text-orange-900 font-bold text-sm uppercase tracking-wider mb-6 relative flex items-center space-x-2">
+                  <h3 className="text-orange-900 font-bold text-xs sm:text-sm uppercase tracking-wider mb-4 sm:mb-6 relative flex items-center space-x-2">
                     <span>🏠 Company</span>
-                    <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"></div>
+                    <div className="absolute -bottom-2 left-0 w-8 sm:w-12 h-0.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full"></div>
                   </h3>
                   <ul className="space-y-4">
                     {footerLinks.company.map((link) => (
@@ -107,9 +107,9 @@ const Footer = () => {
 
                 {/* Contact Information */}
                 <div>
-                  <h3 className="text-orange-900 font-bold text-sm uppercase tracking-wider mb-6 relative flex items-center space-x-2">
+                  <h3 className="text-orange-900 font-bold text-xs sm:text-sm uppercase tracking-wider mb-4 sm:mb-6 relative flex items-center space-x-2">
                     <span>📞 Contact Info</span>
-                    <div className="absolute -bottom-2 left-0 w-12 h-0.5 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full"></div>
+                    <div className="absolute -bottom-2 left-0 w-8 sm:w-12 h-0.5 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full"></div>
                   </h3>
                   <div className="space-y-4">
                     <div className="flex items-center space-x-3">
@@ -156,13 +156,13 @@ const Footer = () => {
                   </div>
                 </div>
 
-                {/* Hands SVG Section */}
+                {/* Hands SVG Section - Responsive */}
                 <div className="flex items-center justify-center">
                   <div className="relative">
                     <img
                       src={HandsSvg}
                       alt="Caring Hands"
-                      className="w-64 h-64 object-contain opacity-80 hover:opacity-100 transition-opacity duration-300 drop-shadow-lg"
+                      className="w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 object-contain opacity-80 hover:opacity-100 transition-opacity duration-300 drop-shadow-lg"
                     />
                   </div>
                 </div>
@@ -171,13 +171,13 @@ const Footer = () => {
           </div>
 
           {/* Bottom Section */}
-          <div className="mt-16 pt-8 border-t border-orange-200/30">
-            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-              <div className="flex items-center space-x-4">
-                <p className="text-orange-700 text-sm">
+          <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-orange-200/30">
+            <div className="flex flex-col sm:flex-row items-center justify-between space-y-3 sm:space-y-0 gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 text-center sm:text-left">
+                <p className="text-orange-700 text-xs sm:text-sm">
                   © 2024 Scribble Therapy Center. All rights reserved.
                 </p>
-                <div className="h-4 w-px bg-orange-300/30"></div>
+                <div className="hidden sm:block h-4 w-px bg-orange-300/30"></div>
                 <p className="text-orange-600 text-xs flex items-center space-x-1">
                   <span>Made with</span>
                   <Heart className="w-4 h-4 fill-orange-500 text-orange-500" />
@@ -185,8 +185,8 @@ const Footer = () => {
                 </p>
               </div>
 
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2 px-4 py-2 bg-orange-100/60 border border-orange-200/50 rounded-full">
+              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                <div className="flex items-center space-x-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-orange-100/60 border border-orange-200/50 rounded-full">
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                   <span className="text-orange-700 text-xs">
                     Licensed & Certified
@@ -197,7 +197,7 @@ const Footer = () => {
                   onClick={() =>
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
-                  className="group flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-200/40 to-amber-200/40 border border-orange-300/40 text-orange-700 text-sm rounded-full hover:from-orange-300/50 hover:to-amber-300/50 hover:border-orange-400/60 transition-all duration-300"
+                  className="group flex items-center space-x-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-orange-200/40 to-amber-200/40 border border-orange-300/40 text-orange-700 text-xs sm:text-sm rounded-full hover:from-orange-300/50 hover:to-amber-300/50 hover:border-orange-400/60 transition-all duration-300"
                 >
                   <svg
                     className="w-4 h-4 group-hover:-translate-y-1 transition-transform duration-300"
