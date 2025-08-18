@@ -3,15 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Star, Users, Target, Sparkles } from "lucide-react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useInView,
-  AnimatePresence,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-import HandsSvg from "../assets/Hands1.svg";
+import Aboutsvg from "../assets/About.svg";
+import Mesvg from "../assets/Me.svg";
 
 // Timeline Progress Component with Scroll-based Animation
 const TimelineProgress = ({ timelineEvents }) => {
@@ -530,90 +525,42 @@ const About = () => {
     {
       name: "Dr. Sarah Mitchell",
       role: "Clinical Director & Child Psychologist",
-      experience: "15+ years",
-      specialties: ["Anxiety & Depression", "Trauma Recovery", "ADHD Support"],
-      image:
-        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=300&fit=crop&crop=face",
-      fun: "Loves painting with watercolors and has two rescue cats! 🐱",
+      image: [Mesvg],
     },
     {
       name: "Maria Gonzalez",
       role: "Licensed Play Therapist",
-      experience: "10+ years",
-      specialties: ["Play Therapy", "Social Skills", "Behavioral Support"],
-      image:
-        "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300&h=300&fit=crop&crop=face",
-      fun: "Marathon runner who makes the best homemade cookies! 🍪",
+      image: [Mesvg],
     },
     {
       name: "Dr. James Park",
       role: "Child & Family Therapist",
-      experience: "12+ years",
-      specialties: ["Family Therapy", "Autism Support", "Communication"],
-      image:
-        "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face",
-      fun: "Board game enthusiast and weekend hiking adventurer! 🎲",
+      image: [Mesvg],
     },
     {
       name: "Dr. Emily Watson",
       role: "Behavioral Specialist",
-      experience: "8+ years",
-      specialties: [
-        "Behavioral Therapy",
-        "ADHD Support",
-        "Learning Disabilities",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1594824388295-7c64464062b3?w=300&h=300&fit=crop&crop=face",
-      fun: "Yoga instructor who loves baking organic treats for the kids! 🧘‍♀️",
+      image: [Mesvg],
     },
     {
       name: "Michael Chen",
       role: "Art & Music Therapist",
-      experience: "7+ years",
-      specialties: ["Art Therapy", "Music Therapy", "Creative Expression"],
-      image:
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face",
-      fun: "Professional guitarist who plays at local children's hospitals! 🎸",
+      image: [Mesvg],
     },
     {
       name: "Dr. Rachel Thompson",
       role: "Developmental Psychologist",
-      experience: "11+ years",
-      specialties: [
-        "Autism Spectrum",
-        "Developmental Delays",
-        "Early Intervention",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b47c?w=300&h=300&fit=crop&crop=face",
-      fun: "Rock climbing enthusiast and children's book author! 📚",
+      image: [Mesvg],
     },
     {
       name: "Alex Rivera",
       role: "Speech & Language Therapist",
-      experience: "9+ years",
-      specialties: [
-        "Speech Therapy",
-        "Language Development",
-        "Communication Skills",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&h=300&fit=crop&crop=face",
-      fun: "Fluent in 4 languages and teaches pottery on weekends! 🏺",
+      image: [Mesvg],
     },
     {
       name: "Dr. Sophia Lee",
       role: "Child Psychiatrist",
-      experience: "14+ years",
-      specialties: [
-        "Child Psychiatry",
-        "Medication Management",
-        "Crisis Intervention",
-      ],
-      image:
-        "https://images.unsplash.com/photo-1594736797933-d0401ba94c3a?w=300&h=300&fit=crop&crop=face",
-      fun: "Competitive swimmer and volunteer at animal shelters! 🏊‍♀️",
+      image: [Mesvg],
     },
   ];
 
@@ -763,7 +710,7 @@ const About = () => {
                   ></div>
 
                   <img
-                    src={HandsSvg}
+                    src={Aboutsvg}
                     alt="Caring Hands"
                     className="relative z-10 drop-shadow-2xl transform transition-transform duration-500"
                     style={{
@@ -772,30 +719,6 @@ const About = () => {
                       minWidth: "500px",
                     }}
                   />
-
-                  {/* Floating elements around hands */}
-                  <div
-                    className="absolute text-4xl animate-pulse"
-                    style={{
-                      bottom: "100px",
-                      left: "60px",
-                      animationDuration: "2s",
-                      animationDelay: "1s",
-                    }}
-                  >
-                    💝
-                  </div>
-                  <div
-                    className="absolute text-4xl animate-bounce"
-                    style={{
-                      top: "150px",
-                      right: "80px",
-                      animationDuration: "3s",
-                      animationDelay: "1.5s",
-                    }}
-                  >
-                    🌟
-                  </div>
                 </div>
               </div>
             </div>
