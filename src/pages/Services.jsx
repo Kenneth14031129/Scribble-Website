@@ -10,13 +10,14 @@ import {
   Music,
   MessageCircle,
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const Services = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [floatingElements, setFloatingElements] = useState([]);
   const heroRef = useRef(null);
+  const timelineRef = useRef(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -114,8 +115,13 @@ const Services = () => {
     {
       icon: Heart,
       title: "Individual Play Therapy",
-      description:
-        "One-on-one sessions using play as the primary therapeutic tool to help children process emotions and experiences.",
+      description: (
+        <>
+          One-on-one sessions using play as the primary
+          <br />
+          therapeutic tool to help children process emotions and experiences.
+        </>
+      ),
       features: [
         "Trauma-informed care",
         "Emotion regulation",
@@ -127,8 +133,13 @@ const Services = () => {
     {
       icon: Brain,
       title: "Cognitive Behavioral Therapy",
-      description:
-        "Evidence-based approach helping children identify and change negative thought patterns and behaviors.",
+      description: (
+        <>
+          Evidence-based approach helping children identify
+          <br />
+          and change negative thought patterns and behaviors.
+        </>
+      ),
       features: [
         "Anxiety management",
         "Depression support",
@@ -140,8 +151,13 @@ const Services = () => {
     {
       icon: Users,
       title: "Family Therapy",
-      description:
-        "Collaborative sessions involving the whole family to improve communication and strengthen relationships.",
+      description: (
+        <>
+          Collaborative sessions involving the whole family
+          <br />
+          to improve communication and strengthen relationships.
+        </>
+      ),
       features: [
         "Family dynamics",
         "Communication skills",
@@ -153,8 +169,13 @@ const Services = () => {
     {
       icon: Palette,
       title: "Art Therapy",
-      description:
-        "Creative expression through art to help children communicate feelings they can't put into words.",
+      description: (
+        <>
+          Creative expression through art to help children
+          <br />
+          communicate feelings they can't put into words.
+        </>
+      ),
       features: [
         "Creative expression",
         "Non-verbal processing",
@@ -166,8 +187,13 @@ const Services = () => {
     {
       icon: Music,
       title: "Music Therapy",
-      description:
-        "Using rhythm, melody, and sound to promote emotional, cognitive, and social development.",
+      description: (
+        <>
+          Using rhythm, melody, and sound to promote
+          <br />
+          emotional, cognitive, and social development.
+        </>
+      ),
       features: [
         "Emotional regulation",
         "Social skills",
@@ -179,8 +205,13 @@ const Services = () => {
     {
       icon: MessageCircle,
       title: "Group Therapy",
-      description:
-        "Peer-supported healing in small, age-appropriate groups with shared experiences or challenges.",
+      description: (
+        <>
+          Peer-supported healing in small, age-appropriate groups
+          <br />
+          with shared experiences or challenges.
+        </>
+      ),
       features: [
         "Social skills development",
         "Peer support",
@@ -422,55 +453,186 @@ const Services = () => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div ref={timelineRef} className="relative">
+            {(() => {
+              const { scrollYProgress } = useScroll({
+                target: timelineRef,
+                offset: ["start center", "end center"],
+              });
+              
+              const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+              
+              return (
+                <>
+                  {/* Central Timeline Line Background */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-orange-200 via-amber-200 to-yellow-200 rounded-full opacity-30" />
+
+                  {/* Animated Central Timeline Line */}
+                  <motion.div
+                    className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-orange-500 via-amber-500 to-yellow-500 rounded-full origin-top"
+                    style={{ height: lineHeight }}
+                  />
+
+                  {/* Glowing Effect */}
+                  <motion.div
+                    className="absolute left-1/2 transform -translate-x-1/2 w-2 bg-gradient-to-b from-orange-400 via-amber-400 to-yellow-400 rounded-full blur-sm origin-top opacity-60"
+                    style={{ height: lineHeight }}
+                  />
+                </>
+              );
+            })()}
+
+            <div className="space-y-16 relative z-10">
             {coreServices.map((service, index) => {
               const IconComponent = service.icon;
+              const isEven = index % 2 === 0;
+              
               return (
-                <motion.div
-                  key={service.title}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border-2 border-orange-100"
-                >
-                  <div className="text-center mb-6">
-                    <div className="flex justify-center items-center mb-4">
-                      <div
-                        className={`p-4 rounded-full bg-gradient-to-r ${service.color} text-white`}
+                <div key={service.title} className="flex">
+                  {/* Left side service */}
+                  {isEven && (
+                    <motion.div
+                      initial={{ 
+                        opacity: 0, 
+                        x: -100,
+                        scale: 0.8
+                      }}
+                      whileInView={{ 
+                        opacity: 1, 
+                        x: 0,
+                        scale: 1
+                      }}
+                      transition={{ 
+                        duration: 0.8, 
+                        delay: index * 0.15,
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 15
+                      }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      className="w-1/2 text-center lg:text-left group pr-8"
+                    >
+                      {/* Content Section */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: index * 0.15 + 0.2 }}
+                        viewport={{ once: true }}
                       >
-                        <IconComponent size={32} />
-                      </div>
-                      <span className="text-4xl ml-4">{service.emoji}</span>
-                    </div>
-                    <h3 className="text-2xl font-bold text-orange-900 mb-4">
-                      {service.title}
-                    </h3>
-                    <p className="text-orange-700 leading-relaxed mb-6">
-                      {service.description}
-                    </p>
-                  </div>
+                        <h3 className="text-3xl lg:text-4xl font-bold text-orange-900 mb-6 group-hover:text-orange-700 transition-colors duration-300">
+                          {service.title}
+                        </h3>
+                        <p className="text-lg text-orange-800 leading-relaxed mb-8">
+                          {service.description}
+                        </p>
+                      </motion.div>
 
-                  <div className="space-y-3">
-                    {service.features.map((feature, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center text-orange-800"
+                      {/* Features List */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.8, delay: index * 0.15 + 0.4 }}
+                        viewport={{ once: true }}
+                        className="space-y-3"
                       >
-                        <div
-                          className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color} mr-3`}
-                        ></div>
-                        <span className="text-sm font-medium">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                        {service.features.map((feature, idx) => (
+                          <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, y: 10 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ 
+                              duration: 0.5, 
+                              delay: index * 0.15 + 0.5 + (idx * 0.1) 
+                            }}
+                            viewport={{ once: true }}
+                            className="flex items-center justify-start text-orange-800 group-hover:text-orange-700 transition-colors duration-300"
+                          >
+                            <motion.div
+                              whileHover={{ scale: 1.5 }}
+                              className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.color} mr-3 flex-shrink-0`}
+                            ></motion.div>
+                            <span className="font-medium">{feature}</span>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    </motion.div>
+                  )}
 
-                  <div
-                    className={`h-1 bg-gradient-to-r ${service.color} rounded-full mx-auto w-12 group-hover:w-full transition-all duration-300 mt-6`}
-                  ></div>
-                </motion.div>
+                  {/* Right side service */}
+                  {!isEven && (
+                    <>
+                      <div className="w-1/2"></div>
+                      <motion.div
+                        initial={{ 
+                          opacity: 0, 
+                          x: 100,
+                          scale: 0.8
+                        }}
+                        whileInView={{ 
+                          opacity: 1, 
+                          x: 0,
+                          scale: 1
+                        }}
+                        transition={{ 
+                          duration: 0.8, 
+                          delay: index * 0.15,
+                          type: "spring",
+                          stiffness: 100,
+                          damping: 15
+                        }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        className="w-1/2 text-center lg:text-left group pl-8"
+                      >
+                        {/* Content Section */}
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6, delay: index * 0.15 + 0.2 }}
+                          viewport={{ once: true }}
+                        >
+                          <h3 className="text-3xl lg:text-4xl font-bold text-orange-900 mb-6 group-hover:text-orange-700 transition-colors duration-300">
+                            {service.title}
+                          </h3>
+                          <p className="text-lg text-orange-800 leading-relaxed mb-8">
+                            {service.description}
+                          </p>
+                        </motion.div>
+
+                        {/* Features List */}
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ duration: 0.8, delay: index * 0.15 + 0.4 }}
+                          viewport={{ once: true }}
+                          className="space-y-3"
+                        >
+                          {service.features.map((feature, idx) => (
+                            <motion.div
+                              key={idx}
+                              initial={{ opacity: 0, y: 10 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              transition={{ 
+                                duration: 0.5, 
+                                delay: index * 0.15 + 0.5 + (idx * 0.1) 
+                              }}
+                              viewport={{ once: true }}
+                              className="flex items-center justify-start text-orange-800 group-hover:text-orange-700 transition-colors duration-300"
+                            >
+                              <motion.div
+                                whileHover={{ scale: 1.5 }}
+                                className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.color} mr-3 flex-shrink-0`}
+                              ></motion.div>
+                              <span className="font-medium">{feature}</span>
+                            </motion.div>
+                          ))}
+                        </motion.div>
+                      </motion.div>
+                    </>
+                  )}
+                </div>
               );
             })}
+            </div>
           </div>
         </div>
       </section>
