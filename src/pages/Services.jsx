@@ -18,7 +18,6 @@ const Services = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [floatingElements, setFloatingElements] = useState([]);
   const heroRef = useRef(null);
-  const timelineRef = useRef(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -432,7 +431,7 @@ const Services = () => {
       </section>
 
       {/* Core Services Section */}
-      <section id="core-therapy-services" className="py-32 bg-gradient-to-b from-white via-orange-50 to-amber-50 relative overflow-hidden">
+      <section id="core-therapy-services" className="py-32 bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -440,211 +439,158 @@ const Services = () => {
             transition={{ duration: 0.6 }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-orange-900 mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold text-slate-800 mb-6">
               Core Therapy Services
             </h2>
-            <p className="text-xl text-orange-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
               Evidence-based therapeutic approaches designed to meet each child
               where they are 🌟
             </p>
           </motion.div>
 
-          <div ref={timelineRef} className="relative">
-            {(() => {
-              const { scrollYProgress } = useScroll({
-                target: timelineRef,
-                offset: ["start center", "end center"],
-              });
-
-              const lineHeight = useTransform(
-                scrollYProgress,
-                [0, 1],
-                ["0%", "100%"]
-              );
-
+          {/* Flowing Services Layout */}
+          <div className="space-y-24">
+            {coreServices.map((service, index) => {
+              const IconComponent = service.icon;
+              const isEven = index % 2 === 0;
+              
               return (
-                <>
-                  {/* Central Timeline Line Background */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-orange-200 via-amber-200 to-yellow-200 rounded-full opacity-30" />
-
-                  {/* Animated Central Timeline Line */}
-                  <motion.div
-                    className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-orange-500 via-amber-500 to-yellow-500 rounded-full origin-top"
-                    style={{ height: lineHeight }}
-                  />
-
-                  {/* Glowing Effect */}
-                  <motion.div
-                    className="absolute left-1/2 transform -translate-x-1/2 w-2 bg-gradient-to-b from-orange-400 via-amber-400 to-yellow-400 rounded-full blur-sm origin-top opacity-60"
-                    style={{ height: lineHeight }}
-                  />
-                </>
-              );
-            })()}
-
-            <div className="space-y-16 relative z-10">
-              {coreServices.map((service, index) => {
-                const IconComponent = service.icon;
-                const isEven = index % 2 === 0;
-
-                return (
-                  <div key={service.title} className="flex">
-                    {/* Left side service */}
-                    {isEven && (
+                <motion.div
+                  key={service.title}
+                  initial={{ opacity: 0, y: 80 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.8, 
+                    delay: index * 0.1,
+                    type: "spring",
+                    stiffness: 80,
+                    damping: 20
+                  }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  className={`relative group flex flex-col lg:flex-row ${
+                    isEven ? '' : 'lg:flex-row-reverse'
+                  } gap-12 lg:gap-20 items-center lg:items-start`}
+                >
+                  {/* Service Content */}
+                  <div className={`w-full lg:w-1/2 ${isEven ? 'lg:pr-12' : 'lg:pl-12'} space-y-6`}>
+                    {/* Icon and Title Container */}
+                    <div className={`flex items-center gap-6 justify-start`}>
                       <motion.div
-                        initial={{
-                          opacity: 0,
-                          x: -100,
-                          scale: 0.8,
-                        }}
-                        whileInView={{
-                          opacity: 1,
-                          x: 0,
-                          scale: 1,
-                        }}
-                        transition={{
-                          duration: 0.8,
-                          delay: index * 0.15,
-                          type: "spring",
-                          stiffness: 100,
-                          damping: 15,
-                        }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        className="w-1/2 text-center lg:text-left group pr-8"
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        className={`relative w-20 h-20 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}
                       >
-                        {/* Content Section */}
+                        <IconComponent className="w-10 h-10 text-white" />
                         <motion.div
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          transition={{
-                            duration: 0.6,
-                            delay: index * 0.15 + 0.2,
-                          }}
-                          viewport={{ once: true }}
-                        >
-                          <h3 className="text-3xl lg:text-4xl font-bold text-orange-900 mb-6 group-hover:text-orange-700 transition-colors duration-300">
-                            {service.title}
-                          </h3>
-                          <p className="text-lg text-orange-800 leading-relaxed mb-8">
-                            {service.description}
-                          </p>
-                        </motion.div>
-
-                        {/* Features List */}
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          whileInView={{ opacity: 1 }}
-                          transition={{
-                            duration: 0.8,
-                            delay: index * 0.15 + 0.4,
-                          }}
-                          viewport={{ once: true }}
-                          className="space-y-3"
-                        >
-                          {service.features.map((feature, idx) => (
-                            <motion.div
-                              key={idx}
-                              initial={{ opacity: 0, y: 10 }}
-                              whileInView={{ opacity: 1, y: 0 }}
-                              transition={{
-                                duration: 0.5,
-                                delay: index * 0.15 + 0.5 + idx * 0.1,
-                              }}
-                              viewport={{ once: true }}
-                              className="flex items-center justify-start text-orange-800 group-hover:text-orange-700 transition-colors duration-300"
-                            >
-                              <motion.div
-                                whileHover={{ scale: 1.5 }}
-                                className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.color} mr-3 flex-shrink-0`}
-                              ></motion.div>
-                              <span className="font-medium">{feature}</span>
-                            </motion.div>
-                          ))}
-                        </motion.div>
+                          className="absolute inset-0 rounded-2xl bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+                          whileHover={{ scale: 1.05 }}
+                        />
                       </motion.div>
-                    )}
+                      
+                      <div className="text-left">
+                        <h3 className="text-3xl lg:text-4xl font-bold text-slate-800 group-hover:text-slate-600 transition-colors duration-300">
+                          {service.title}
+                        </h3>
+                      </div>
+                    </div>
 
-                    {/* Right side service */}
-                    {!isEven && (
-                      <>
-                        <div className="w-1/2"></div>
+                    {/* Description */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 + 0.3, duration: 0.6 }}
+                      className="text-left"
+                    >
+                      <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
+                        {service.description}
+                      </p>
+                    </motion.div>
+
+                    {/* Features Grid */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 + 0.5, duration: 0.8 }}
+                      className={`grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl`}
+                    >
+                      {service.features.map((feature, idx) => (
                         <motion.div
-                          initial={{
-                            opacity: 0,
-                            x: 100,
-                            scale: 0.8,
+                          key={idx}
+                          initial={{ opacity: 0, x: isEven ? -20 : 20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ 
+                            delay: index * 0.1 + 0.7 + idx * 0.1, 
+                            duration: 0.5 
                           }}
-                          whileInView={{
-                            opacity: 1,
-                            x: 0,
-                            scale: 1,
-                          }}
-                          transition={{
-                            duration: 0.8,
-                            delay: index * 0.15,
-                            type: "spring",
-                            stiffness: 100,
-                            damping: 15,
-                          }}
-                          viewport={{ once: true, margin: "-50px" }}
-                          className="w-1/2 text-center lg:text-left group pl-8"
+                          whileHover={{ scale: 1.02 }}
+                          className={`flex items-center gap-3 p-3 rounded-xl bg-white/60 backdrop-blur-sm hover:bg-white/80 transition-all duration-300 border border-white/30`}
                         >
-                          {/* Content Section */}
                           <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{
-                              duration: 0.6,
-                              delay: index * 0.15 + 0.2,
-                            }}
-                            viewport={{ once: true }}
-                          >
-                            <h3 className="text-3xl lg:text-4xl font-bold text-orange-900 mb-6 group-hover:text-orange-700 transition-colors duration-300">
-                              {service.title}
-                            </h3>
-                            <p className="text-lg text-orange-800 leading-relaxed mb-8">
-                              {service.description}
-                            </p>
-                          </motion.div>
-
-                          {/* Features List */}
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            transition={{
-                              duration: 0.8,
-                              delay: index * 0.15 + 0.4,
-                            }}
-                            viewport={{ once: true }}
-                            className="space-y-3"
-                          >
-                            {service.features.map((feature, idx) => (
-                              <motion.div
-                                key={idx}
-                                initial={{ opacity: 0, y: 10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{
-                                  duration: 0.5,
-                                  delay: index * 0.15 + 0.5 + idx * 0.1,
-                                }}
-                                viewport={{ once: true }}
-                                className="flex items-center justify-start text-orange-800 group-hover:text-orange-700 transition-colors duration-300"
-                              >
-                                <motion.div
-                                  whileHover={{ scale: 1.5 }}
-                                  className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.color} mr-3 flex-shrink-0`}
-                                ></motion.div>
-                                <span className="font-medium">{feature}</span>
-                              </motion.div>
-                            ))}
-                          </motion.div>
+                            whileHover={{ scale: 1.3 }}
+                            className={`w-2 h-2 rounded-full bg-gradient-to-r ${service.color} flex-shrink-0`}
+                          />
+                          <span className="text-sm font-medium text-slate-700">
+                            {feature}
+                          </span>
                         </motion.div>
-                      </>
-                    )}
+                      ))}
+                    </motion.div>
                   </div>
-                );
-              })}
-            </div>
+
+                  {/* Decorative Element */}
+                  <motion.div
+                    initial={{ scale: 0, rotate: -45 }}
+                    whileInView={{ scale: 1, rotate: 0 }}
+                    transition={{ 
+                      delay: index * 0.1 + 0.2, 
+                      duration: 1,
+                      type: "spring",
+                      stiffness: 100
+                    }}
+                    className={`w-full lg:w-1/2 flex justify-center lg:justify-center relative`}
+                  >
+                    <div className={`w-32 h-32 lg:w-48 lg:h-48 rounded-full bg-gradient-to-br ${service.color} opacity-10 relative`}>
+                      <motion.div
+                        animate={{ 
+                          scale: [1, 1.1, 1],
+                          rotate: [0, 5, -5, 0]
+                        }}
+                        transition={{ 
+                          duration: 6,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        className={`absolute inset-4 rounded-full bg-gradient-to-br ${service.color} opacity-20`}
+                      />
+                      <motion.div
+                        animate={{ 
+                          scale: [1, 1.05, 1],
+                          rotate: [0, -3, 3, 0]
+                        }}
+                        transition={{ 
+                          duration: 8,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 1
+                        }}
+                        className={`absolute inset-8 rounded-full bg-gradient-to-br ${service.color} opacity-30`}
+                      />
+                    </div>
+                  </motion.div>
+
+                  {/* Connection Line to Next Service */}
+                  {index < coreServices.length - 1 && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      whileInView={{ height: '60px', opacity: 0.3 }}
+                      transition={{ delay: index * 0.1 + 1, duration: 0.8 }}
+                      className={`absolute -bottom-12 ${
+                        isEven ? 'right-1/4' : 'left-1/4'
+                      } w-px bg-gradient-to-b from-slate-300 to-transparent hidden lg:block`}
+                    />
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
