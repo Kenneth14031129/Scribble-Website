@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
@@ -11,7 +10,7 @@ import {
   MessageCircle,
   ChevronDown,
 } from "lucide-react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Services = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -431,7 +430,10 @@ const Services = () => {
       </section>
 
       {/* Core Services Section */}
-      <section id="core-therapy-services" className="py-32 bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 relative overflow-hidden">
+      <section
+        id="core-therapy-services"
+        className="py-32 bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 relative overflow-hidden"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -453,26 +455,30 @@ const Services = () => {
             {coreServices.map((service, index) => {
               const IconComponent = service.icon;
               const isEven = index % 2 === 0;
-              
+
               return (
                 <motion.div
                   key={service.title}
                   initial={{ opacity: 0, y: 80 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.8, 
+                  transition={{
+                    duration: 0.8,
                     delay: index * 0.1,
                     type: "spring",
                     stiffness: 80,
-                    damping: 20
+                    damping: 20,
                   }}
                   viewport={{ once: true, margin: "-100px" }}
                   className={`relative group flex flex-col lg:flex-row ${
-                    isEven ? '' : 'lg:flex-row-reverse'
+                    isEven ? "" : "lg:flex-row-reverse"
                   } gap-12 lg:gap-20 items-center lg:items-start`}
                 >
                   {/* Service Content */}
-                  <div className={`w-full lg:w-1/2 ${isEven ? 'lg:pr-12' : 'lg:pl-12'} space-y-6`}>
+                  <div
+                    className={`w-full lg:w-1/2 ${
+                      isEven ? "lg:pr-12" : "lg:pl-12"
+                    } space-y-6`}
+                  >
                     {/* Icon and Title Container */}
                     <div className={`flex items-center gap-6 justify-start`}>
                       <motion.div
@@ -485,7 +491,7 @@ const Services = () => {
                           whileHover={{ scale: 1.05 }}
                         />
                       </motion.div>
-                      
+
                       <div className="text-left">
                         <h3 className="text-3xl lg:text-4xl font-bold text-slate-800 group-hover:text-slate-600 transition-colors duration-300">
                           {service.title}
@@ -517,9 +523,9 @@ const Services = () => {
                           key={idx}
                           initial={{ opacity: 0, x: isEven ? -20 : 20 }}
                           whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ 
-                            delay: index * 0.1 + 0.7 + idx * 0.1, 
-                            duration: 0.5 
+                          transition={{
+                            delay: index * 0.1 + 0.7 + idx * 0.1,
+                            duration: 0.5,
                           }}
                           whileHover={{ scale: 1.02 }}
                           className={`flex items-center gap-3 p-3 rounded-xl bg-white/60 backdrop-blur-sm hover:bg-white/80 transition-all duration-300 border border-white/30`}
@@ -540,37 +546,39 @@ const Services = () => {
                   <motion.div
                     initial={{ scale: 0, rotate: -45 }}
                     whileInView={{ scale: 1, rotate: 0 }}
-                    transition={{ 
-                      delay: index * 0.1 + 0.2, 
+                    transition={{
+                      delay: index * 0.1 + 0.2,
                       duration: 1,
                       type: "spring",
-                      stiffness: 100
+                      stiffness: 100,
                     }}
                     className={`w-full lg:w-1/2 flex justify-center lg:justify-center relative`}
                   >
-                    <div className={`w-32 h-32 lg:w-48 lg:h-48 rounded-full bg-gradient-to-br ${service.color} opacity-10 relative`}>
+                    <div
+                      className={`w-32 h-32 lg:w-48 lg:h-48 rounded-full bg-gradient-to-br ${service.color} opacity-10 relative`}
+                    >
                       <motion.div
-                        animate={{ 
+                        animate={{
                           scale: [1, 1.1, 1],
-                          rotate: [0, 5, -5, 0]
+                          rotate: [0, 5, -5, 0],
                         }}
-                        transition={{ 
+                        transition={{
                           duration: 6,
                           repeat: Infinity,
-                          ease: "easeInOut"
+                          ease: "easeInOut",
                         }}
                         className={`absolute inset-4 rounded-full bg-gradient-to-br ${service.color} opacity-20`}
                       />
                       <motion.div
-                        animate={{ 
+                        animate={{
                           scale: [1, 1.05, 1],
-                          rotate: [0, -3, 3, 0]
+                          rotate: [0, -3, 3, 0],
                         }}
-                        transition={{ 
+                        transition={{
                           duration: 8,
                           repeat: Infinity,
                           ease: "easeInOut",
-                          delay: 1
+                          delay: 1,
                         }}
                         className={`absolute inset-8 rounded-full bg-gradient-to-br ${service.color} opacity-30`}
                       />
@@ -581,10 +589,10 @@ const Services = () => {
                   {index < coreServices.length - 1 && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
-                      whileInView={{ height: '60px', opacity: 0.3 }}
+                      whileInView={{ height: "60px", opacity: 0.3 }}
                       transition={{ delay: index * 0.1 + 1, duration: 0.8 }}
                       className={`absolute -bottom-12 ${
-                        isEven ? 'right-1/4' : 'left-1/4'
+                        isEven ? "right-1/4" : "left-1/4"
                       } w-px bg-gradient-to-b from-slate-300 to-transparent hidden lg:block`}
                     />
                   )}
