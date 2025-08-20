@@ -34,7 +34,7 @@ A modern, responsive React web application built with Vite, featuring smooth ani
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Kenneth14031129/Scribble-Website.git
 cd Scribble
 ```
 
